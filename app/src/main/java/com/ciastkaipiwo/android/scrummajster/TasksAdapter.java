@@ -19,18 +19,14 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
 
     private List<Task> tasksList;
 
-
-    public TasksAdapter(List<Task> projectList) {
-        this.tasksList = projectList;
-
-
+    public TasksAdapter(List<Task> tasksList) {
+        this.tasksList = tasksList;
     }
 
     @Override
     public TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.tasks_list_row, parent, false);
-
         return new TaskViewHolder(itemView);
     }
 
@@ -54,17 +50,12 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
         public int position;
 
 
-
         public TaskViewHolder(View view) {
             super(view);
             name = (TextView) view.findViewById(R.id.task_row_story);
             weight = (TextView) view.findViewById(R.id.task_row_weight);
             time = (TextView) view.findViewById(R.id.task_row_time);
-
-
         }
-
-
-        }
+    }
 
 }

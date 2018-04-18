@@ -9,6 +9,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,10 +27,10 @@ public class BacklogActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private TasksAdapter mTasksAdapter;
 
-
-    public BacklogActivity() {
+    public void onResume() {
+        super.onResume();
+        mRecyclerView.setAdapter(mTasksAdapter);
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,7 @@ public class BacklogActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mTasksAdapter);
 
 
-        mPlus = (FloatingActionButton) findViewById(R.id.plus);
+        mPlus = (FloatingActionButton) findViewById(R.id.add_task);
         mPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,7 +67,9 @@ public class BacklogActivity extends AppCompatActivity {
             if (data == null) {
                 return;
             }
+            System.out.println(NameList.size());
             NameList.add(TaskConfigActivity.getNewTask(data));
+            System.out.println(NameList.size());
             Toast.makeText(BacklogActivity.this, "Pomyslnie dodano task: "+String.valueOf(TaskConfigActivity.getNewTask(data).getTime()), Toast.LENGTH_LONG).show();
         }
     }
