@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/backlog_container"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/backlog_text"
+            android:textSize="25dp"
+            android:textColor="@android:color/white"
+            android:background="@color/sprint_backlog_color"
+            android:padding="10dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/sprint_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sprint_text"
+            android:textSize="25dp"
+            android:textColor="@android:color/white"
+            android:background="@color/sprint_backlog_color"
+            android:padding="10dp"/>
+        <TextView
+            android:id="@+id/sprint_details"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="10dp"
+            android:textSize="15dp"
+            android:paddingLeft="15dp"/>
+    </LinearLayout>
+
+
+</LinearLayout>

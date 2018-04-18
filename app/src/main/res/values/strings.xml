@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">ScrumMajster</string>
+    <string name="main_text">Your Projects</string>
+    <string name="project_title_hint">Type project name here...</string>
+    <string name="const_start_date">Start Date:</string>
+    <string name="const_end_date">End Date:</string>
+    <string name="ok_button">OK</string>
+    <string name="backlog_text">Backlog</string>
+    <string name="sprint_text">Current Sprint</string>
+    <string name="no_active_sprint">There is no active sprint. Tap to create</string>
+    <string name="sprint_title_hint">Enter sprint name here...</string>
+    <string name="active_tasks">active tasks.</string>
+    <string name="empty_sprint">There is no active tasks. Go to Backlog</string>
+    <string name="noempty_sprint">Tasks to do:</string>
+    <string name="to_do_text">To Do:</string>
+    <string name="doing_text">Doing:</string>
+    <string name="done_text">Done:</string>
+    <string name="backlog_add_task">ADD TASK</string>
+    <string name="const_new_task">Adding task</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="task_story_hint">Enter user story</string>
+    <string name="task_weight_tint">Enter weight</string>
+    <string name="task_time_tint">Enter time</string>
+
+</resources>
