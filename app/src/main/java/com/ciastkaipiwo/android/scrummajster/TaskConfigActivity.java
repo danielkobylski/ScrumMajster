@@ -44,12 +44,12 @@ public class TaskConfigActivity extends AppCompatActivity{
             }
         });
         //mCancel.setOnClickListener(new View.OnClickListener() {
-            //@Override
-            //public void onClick(View v) {
-               // finish();
-            //}
+        //@Override
+        //public void onClick(View v) {
+        // finish();
+        //}
 
-       // });
+        // });
 
     }
 
