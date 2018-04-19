@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 
 public class Task implements Parcelable {
+    private int mId;
     private String mStory;
     private int mWeight;
     private int mTime;
@@ -14,7 +15,8 @@ public class Task implements Parcelable {
     private ArrayList<String> mDoing;
     private ArrayList<String> mDone;
 
-    Task(String story, int weight, int time) {
+    Task(int id, String story, int weight, int time) {
+        mId = id;
         mStory = story;
         mWeight = weight;
         mTime = time;
@@ -23,7 +25,7 @@ public class Task implements Parcelable {
         mDone = new ArrayList<String>();
     }
 
-
+    public int getId() {return mId;}
     public String getStory() {
         return mStory;
     }
@@ -61,6 +63,7 @@ public class Task implements Parcelable {
     public void setDone(ArrayList<String> done) {mDone = done;}
 
     protected Task(Parcel in) {
+        mId = in.readInt();
         mStory = in.readString();
         mWeight = in.readInt();
         mTime = in.readInt();
@@ -91,6 +94,7 @@ public class Task implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mId);
         dest.writeString(mStory);
         dest.writeInt(mWeight);
         dest.writeInt(mTime);

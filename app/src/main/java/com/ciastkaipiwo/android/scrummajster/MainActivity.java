@@ -26,6 +26,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_ADD = 0;
+    private static final int REQUEST_CODE_EDIT_PROJECT = 2;
 
     private List<Project> mProjectList = new ArrayList<>();
     private RecyclerView mRecyclerView;
@@ -77,12 +78,17 @@ public class MainActivity extends AppCompatActivity {
             if (data == null) {
                 return;
             }
-            //mProjectList.add(ProjectConfigActivity.getNewProject(data));
             mDatabaseHelper.addProject(ProjectConfigActivity.getNewProject(data));
+        }
+        else if (requestCode == REQUEST_CODE_EDIT_PROJECT) {
+            if (data == null) {
+                return;
+            }
+            mDatabaseHelper.editProject(ProjectConfigActivity.getOldProject(data), ProjectConfigActivity.getNewProject(data));
         }
     }
 
-    private void initProjectsData() {
+    public void initProjectsData() {
         mProjectList.clear();
         Cursor data = mDatabaseHelper.getProjects();
         while (data.moveToNext()) {

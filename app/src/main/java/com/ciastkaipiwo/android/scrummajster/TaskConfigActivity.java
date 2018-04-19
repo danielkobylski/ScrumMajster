@@ -9,12 +9,12 @@ import android.widget.EditText;
 
 public class TaskConfigActivity extends AppCompatActivity{
     private static final String EXTRA_TASK = "com.example.angela.backlogactivity.extra_task";
-
+    private static final String TASK_TO_EDIT = "com.example.angela.backlogactivity.task_to_edit";
     private Button mOK;
-    private Button mCancel;
     private EditText mName;
     private EditText mWeight;
     private EditText mTime;
+    private Task mTaskToEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,10 +22,15 @@ public class TaskConfigActivity extends AppCompatActivity{
         setContentView(R.layout.activity_task_config);
 
         mOK = (Button) findViewById(R.id.OK);
-        //mCancel = (Button) findViewById(R.id.cancel);
         mName = (EditText) findViewById(R.id.name);
         mWeight = (EditText) findViewById(R.id.weight);
         mTime = (EditText) findViewById(R.id.time);
+        mTaskToEdit = getIntent().getParcelableExtra(TASK_TO_EDIT);
+        if (mTaskToEdit != null) {
+            mName.setText(mTaskToEdit.getStory());
+            mWeight.setText(String.valueOf(mTaskToEdit.getWeight()));
+            mTime.setText(String.valueOf(mTaskToEdit.getTime()));
+        }
 
         mOK.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,27 +40,25 @@ public class TaskConfigActivity extends AppCompatActivity{
                 int Weight = Integer.parseInt(WeightS);
                 String TimeS = mTime.getText().toString();
                 int Time = Integer.parseInt(TimeS);
-
-                Task newTask = new Task(Name, Weight, Time);
+                Task newTask = new Task(0, Name, Weight, Time);
                 Intent data = new Intent();
                 data.putExtra(EXTRA_TASK, newTask);
                 setResult(RESULT_OK, data);
                 finish();
             }
         });
-        //mCancel.setOnClickListener(new View.OnClickListener() {
-        //@Override
-        //public void onClick(View v) {
-        // finish();
-        //}
-
-        // });
-
     }
 
     public static Task getNewTask(Intent result) {
         return (Task) result.getParcelableExtra(EXTRA_TASK);
     }
+
+    public static Intent newIntent(Context packageContext, Task task){
+        Intent intent = new Intent(packageContext, TaskConfigActivity.class);
+        intent.putExtra(TASK_TO_EDIT,task);
+        return intent;
+    }
+
 }
 
 
