@@ -2,6 +2,7 @@ package com.ciastkaipiwo.android.scrummajster;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -18,6 +19,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -25,6 +27,8 @@ import java.util.List;
 public class ProjectConfigActivity extends Activity {
 
     private static final String NEW_PROJECT = "com.ciastkaipiwo.android.scrummajster.new_project";
+    private static final String PROJECT_TO_EDIT = "com.ciastkaipiwo.android.scrummajster.project_to_edit";
+    private static final String OLD_PROJECT = "com.ciastkaipiwo.android.scrummajster.old_project";
 
     private EditText mProjectTitle;
     private TextView mStartDate;
@@ -32,7 +36,7 @@ public class ProjectConfigActivity extends Activity {
     private Button mSubmitButton;
     private DatePickerDialog.OnDateSetListener mStartDateSetListener;
     private DatePickerDialog.OnDateSetListener mEndDateSetListener;
-
+    private Project mProjectToEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +44,18 @@ public class ProjectConfigActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_project_config);
 
+        mProjectToEdit = getIntent().getParcelableExtra(PROJECT_TO_EDIT);
 
         mProjectTitle = (EditText) findViewById(R.id.project_name_config);
         mSubmitButton = (Button) findViewById(R.id.project_submit_button);
         mStartDate = (TextView) findViewById(R.id.start_date);
         mEndDate = (TextView) findViewById(R.id.end_date);
 
-
+        if (mProjectToEdit != null) {
+            mProjectTitle.setText(mProjectToEdit.getTitle());
+            mStartDate.setText(new SimpleDateFormat("yyyy.MM.dd").format(mProjectToEdit.getStartDate().getTimeInMillis()));
+            mEndDate.setText(new SimpleDateFormat("yyyy.MM.dd").format(mProjectToEdit.getEndDate().getTimeInMillis()));
+        }
 
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +74,7 @@ public class ProjectConfigActivity extends Activity {
                 Project newProject = new Project(0,title, new GregorianCalendar(startYear,startMonth-1,startDay), new GregorianCalendar(endYear,endMonth-1,endDay));
                 Intent data = new Intent();
                 data.putExtra(NEW_PROJECT, newProject);
+                data.putExtra(OLD_PROJECT, mProjectToEdit);
                 setResult(RESULT_OK, data);
                 finish();
             }
@@ -119,6 +129,17 @@ public class ProjectConfigActivity extends Activity {
 
     public static Project getNewProject(Intent result) {
         return (Project) result.getParcelableExtra(NEW_PROJECT);
+    }
+
+    public static Project getOldProject(Intent result) {
+        return (Project) result.getParcelableExtra(OLD_PROJECT);
+    }
+
+    public static Intent newIntent(Context packageContext, Project project){
+        Intent intent = new Intent(packageContext, ProjectConfigActivity.class);
+        intent.putExtra(PROJECT_TO_EDIT,project);
+
+        return intent;
     }
 
 

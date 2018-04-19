@@ -50,13 +50,13 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
         public TextView weight;
         public TextView time;
         public int position;
-        private ArrayList<Task> taskList;
+        //private ArrayList<Task> taskList;
 
 
         public TaskViewHolder(View view, List<Task>taskList) {
             super(view);
             view.setOnClickListener(this);
-            this.taskList = (ArrayList<Task>) taskList;
+            //this.taskList = (ArrayList<Task>) taskList;
             name = (TextView) view.findViewById(R.id.task_row_story);
             weight = (TextView) view.findViewById(R.id.task_row_weight);
             time = (TextView) view.findViewById(R.id.task_row_time);
@@ -64,8 +64,8 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
         @Override
         public void onClick(View v){
             Intent intent = TaskActivity.newIntent(v.getContext(), tasksList.get(this.position));
-            intent.putExtra("taskList",this.taskList);
-            intent.putExtra("position",position);
+            //intent.putExtra("task",this.taskList.get(this.position));
+            //intent.putExtra("position",position);
             v.getContext().startActivity(intent);
         }
     }

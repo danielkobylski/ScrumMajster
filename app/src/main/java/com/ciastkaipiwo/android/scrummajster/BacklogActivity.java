@@ -11,10 +11,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ciastkaipiwo.android.scrummajster.database.ProjectsDBHelper;
@@ -64,9 +60,6 @@ public class BacklogActivity extends AppCompatActivity {
                 startActivityForResult(intent, REQUEST_CODE_ADD_TASK);
             }
         });
-
-
-
     }
 
     @Override
@@ -78,7 +71,6 @@ public class BacklogActivity extends AppCompatActivity {
             if (data == null) {
                 return;
             }
-            //NameList.add(TaskConfigActivity.getNewTask(data));
             mDatabaseHelper.addTask(projectId,-1,TaskConfigActivity.getNewTask(data));
             Toast.makeText(BacklogActivity.this, "Pomyslnie dodano task: "+String.valueOf(TaskConfigActivity.getNewTask(data).getTime()), Toast.LENGTH_LONG).show();
         }
@@ -94,10 +86,12 @@ public class BacklogActivity extends AppCompatActivity {
         mTasksList.clear();
         Cursor data = mDatabaseHelper.getBacklogTasks(projectId);
         while (data.moveToNext()) {
+            int id = data.getInt(0);
+            System.out.println(id);
             String story = data.getString(3);
             int weight = data.getInt(4);
             int time = data.getInt(5);
-            mTasksList.add(new Task(story, weight, time));
+            mTasksList.add(new Task(id,story, weight, time));
         }
     }
 

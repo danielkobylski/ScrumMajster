@@ -12,6 +12,7 @@ import java.util.*;
 
 public class Sprint implements Parcelable {
 
+    private int mId;
     private GregorianCalendar mStartDate;
     private GregorianCalendar mEndDate;
     public ArrayList<Task> mTasksList;
@@ -22,14 +23,15 @@ public class Sprint implements Parcelable {
         this.mTasksList = new ArrayList<Task>();
     }
 
-    Sprint(GregorianCalendar startDate, GregorianCalendar endDate)
+    Sprint(int id, GregorianCalendar startDate, GregorianCalendar endDate)
     {
+        this.mId = id;
         this.mStartDate = startDate;
         this.mEndDate = endDate;
         this.mTasksList = new ArrayList<Task>();
     }
 
-
+    public int getId() {return mId;}
     public GregorianCalendar getStartDate() {
         return mStartDate;
     }
@@ -52,6 +54,7 @@ public class Sprint implements Parcelable {
 
 
     protected Sprint(Parcel in) {
+        mId = in.readInt();
         mStartDate = (GregorianCalendar) in.readValue(GregorianCalendar.class.getClassLoader());
         mEndDate = (GregorianCalendar) in.readValue(GregorianCalendar.class.getClassLoader());
         if (in.readByte() == 0x01) {
@@ -69,6 +72,7 @@ public class Sprint implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mId);
         dest.writeValue(mStartDate);
         dest.writeValue(mEndDate);
         if (mTasksList == null) {

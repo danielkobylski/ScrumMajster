@@ -21,5 +21,9 @@
     <string name="task_story_hint">Enter user story</string>
     <string name="task_weight_tint">Enter weight</string>
     <string name="task_time_tint">Enter time</string>
+    <string-array name="project_dropdown_options">
+        <item>Edit project</item>
+        <item>Delete project</item>
+    </string-array>
 
 </resources>

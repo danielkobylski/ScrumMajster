@@ -38,6 +38,7 @@ public class SprintActivity extends AppCompatActivity {
         mSprint = getIntent().getExtras().getParcelable(SPRINT);
         mTask = getIntent().getExtras().getParcelable(TASK);
 
+        /*
         mSprint.mTasksList.add(new Task("Task1",1,5));
         mSprint.mTasksList.add(new Task("Task2",1,7));
         mSprint.mTasksList.add(new Task("Task3",1,4));
@@ -45,7 +46,7 @@ public class SprintActivity extends AppCompatActivity {
         mSprint.mTasksList.add(new Task("Task5",2,3));
         mSprint.mTasksList.add(new Task("Task6",3,1));
         mSprint.mTasksList.add(new Task("Task7",4,1));
-
+*/
         TextView textViewFirs = (TextView) findViewById (R.id.sprint_first_text);
         textViewFirs.setText(getString(R.string.sprint_text));
 
