@@ -6,7 +6,7 @@
     <string name="const_end_date">End Date:</string>
     <string name="ok_button">OK</string>
     <string name="backlog_text">Backlog</string>
-    <string name="sprint_text">Current Sprint</string>
+    <string name="sprint_text">Sprints</string>
     <string name="no_active_sprint">There is no active sprint. Tap to create</string>
     <string name="sprint_title_hint">Enter sprint name here...</string>
     <string name="active_tasks">active tasks.</string>
@@ -21,5 +21,9 @@
     <string name="task_story_hint">Enter user story</string>
     <string name="task_weight_tint">Enter weight</string>
     <string name="task_time_tint">Enter time</string>
+    
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="team">Team</string>
+    <string name="meetings">Meetings</string>
 
 </resources>

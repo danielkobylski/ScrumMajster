@@ -5,17 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 public class ProjectActivity extends AppCompatActivity {
 
 
     private static final String PROJECT = "com.ciastkaipiwo.android.scrummajster.project";
     private static final int REQUEST_CODE_ADD_SPRINT = 1;
+
+
     
-    private TextView mSprintDetails;
+   // private TextView mSprintDetails;
     private Project mProject;
     private LinearLayout mBacklogContainer;
     private LinearLayout mSprintContainer;
@@ -27,8 +29,8 @@ public class ProjectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_project);
 
         mProject = getIntent().getParcelableExtra(PROJECT);
-        System.out.println(mProject.getId());
-        mSprintDetails = (TextView) findViewById(R.id.sprint_details);
+
+       // mSprintDetails = (TextView) findViewById(R.id.sprint_details);
         mSprintContainer = (LinearLayout) findViewById(R.id.sprint_container);
 
         updateUI();
@@ -38,17 +40,19 @@ public class ProjectActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (mProject.getSprints().size() == 0) {
-                    Intent intent = new Intent(ProjectActivity.this, SprintConfigActivity.class);
-                    startActivityForResult(intent, REQUEST_CODE_ADD_SPRINT);
-                }
+                Intent intent = new Intent(ProjectActivity.this,SprintMainActivity.class);
+                startActivity(intent);
+                //if (mProject.getSprints().size() == 0) {
+                    //Intent intent = new Intent(ProjectActivity.this, SprintConfigActivity.class);
+                   // startActivityForResult(intent, REQUEST_CODE_ADD_SPRINT);
+               // }
 
-                else {
+              // else {
 
-                    Sprint sprint = mProject.getSprints().get(mProject.getSprints().size() - 1);
-                    Intent intent = SprintActivity.newIntent(ProjectActivity.this,sprint);
-                    startActivity(intent);
-                }
+                   // Sprint sprint = mProject.getSprints().get(mProject.getSprints().size() - 1);
+                   // Intent intent = SprintActivity.newIntent(ProjectActivity.this,sprint);
+                   // startActivity(intent);
+               // }
             }
         });
 
@@ -92,10 +96,10 @@ public class ProjectActivity extends AppCompatActivity {
         if (mProject.getSprints().size() != 0) {
             Sprint activeSprint = mProject.getSprints().get(mProject.getSprints().size()-1);
             int taskCount = activeSprint.mTasksList.size();
-            mSprintDetails.setText(taskCount + " " + getString(R.string.active_tasks));
+            //mSprintDetails.setText(taskCount + " " + getString(R.string.active_tasks));
         }
         else {
-            mSprintDetails.setText(getString(R.string.no_active_sprint));
+            //mSprintDetails.setText(getString(R.string.no_active_sprint));
         }
     }
 

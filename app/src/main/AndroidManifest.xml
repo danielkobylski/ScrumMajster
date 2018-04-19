@@ -22,8 +22,9 @@
         <activity android:name=".SprintActivity" />
         <activity android:name=".KanbanActivity" />
         <activity android:name=".BacklogActivity" />
+        <activity android:name=".TaskConfigActivity" />
+        <activity android:name=".SprintMainActivity" android:label="Sprints"/>
         <activity android:name=".TaskActivity" />
-        <activity android:name=".TaskConfigActivity"></activity>
     </application>
 
 </manifest>
