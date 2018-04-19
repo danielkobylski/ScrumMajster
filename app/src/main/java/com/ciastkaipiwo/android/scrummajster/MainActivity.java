@@ -2,6 +2,7 @@ package com.ciastkaipiwo.android.scrummajster;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
+
+import com.ciastkaipiwo.android.scrummajster.database.ProjectsDBHelper;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -23,10 +31,11 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private ProjectsAdapter mProjectsAdapter;
     private FloatingActionButton mAddButton;
-
+    private ProjectsDBHelper mDatabaseHelper;
     @Override
     public void onResume() {
         super.onResume();
+        initProjectsData();
         mRecyclerView.setAdapter(mProjectsAdapter);
 
     }
@@ -35,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mDatabaseHelper = new ProjectsDBHelper(this);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
         mProjectsAdapter = new ProjectsAdapter(mProjectList);
@@ -54,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        initProjectsData();
+        //initProjectsData();
 
     }
 
@@ -67,14 +77,22 @@ public class MainActivity extends AppCompatActivity {
             if (data == null) {
                 return;
             }
-            mProjectList.add(ProjectConfigActivity.getNewProject(data));
-
+            //mProjectList.add(ProjectConfigActivity.getNewProject(data));
+            mDatabaseHelper.addProject(ProjectConfigActivity.getNewProject(data));
         }
     }
 
     private void initProjectsData() {
-        for (int i = 1; i<3; i++) {
-            mProjectList.add(new Project("Project"+i, new GregorianCalendar(2018,03,31), new GregorianCalendar(2018,04,i)));
+        mProjectList.clear();
+        Cursor data = mDatabaseHelper.getProjects();
+        while (data.moveToNext()) {
+            int id = data.getInt(0);
+            String title = data.getString(1);
+            GregorianCalendar startDate = new GregorianCalendar();
+            GregorianCalendar endDate = new GregorianCalendar();
+            startDate.setTimeInMillis(data.getLong(2));
+            endDate.setTimeInMillis(data.getLong(3));
+            mProjectList.add(new Project(id, title, startDate, endDate));
         }
     }
 

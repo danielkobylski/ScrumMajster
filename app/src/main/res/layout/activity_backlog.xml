@@ -24,6 +24,4 @@
         android:tint="@android:color/white"
         app:backgroundTint="#006064" />
 
-
-
 </android.support.constraint.ConstraintLayout>

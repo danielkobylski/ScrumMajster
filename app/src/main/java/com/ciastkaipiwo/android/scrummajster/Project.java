@@ -13,19 +13,24 @@ import java.util.GregorianCalendar;
 
 public class Project implements Parcelable {
 
+
+    private int mId;
     private String mTitle;
     private GregorianCalendar mStartDate;
     private GregorianCalendar mEndDate;
     private ArrayList<Sprint> mSprints;
 
-    Project(String title, GregorianCalendar startDate, GregorianCalendar endDate) {
+    Project(int id, String title, GregorianCalendar startDate, GregorianCalendar endDate) {
+        mId = id;
         mTitle = title;
         mStartDate = startDate;
         mEndDate = endDate;
         mSprints = new ArrayList<Sprint>();
     }
 
-
+    public int getId() {
+        return mId;
+    }
     public String getTitle() {
         return mTitle;
     }
@@ -37,6 +42,8 @@ public class Project implements Parcelable {
         mStartDate = startDate;
 
     }
+
+
     public GregorianCalendar getEndDate() {
         return mEndDate;
     }
@@ -46,12 +53,14 @@ public class Project implements Parcelable {
     public ArrayList<Sprint> getSprints() {return mSprints;}
     public void setSprints(ArrayList<Sprint> sprints) {mSprints = sprints;}
 
+
     public void addSprint(Sprint sprint) {
         mSprints.add(sprint);
     }
 
 
     protected Project(Parcel in) {
+        mId = in.readInt();
         mTitle = in.readString();
         mStartDate = (GregorianCalendar) in.readValue(GregorianCalendar.class.getClassLoader());
         mEndDate = (GregorianCalendar) in.readValue(GregorianCalendar.class.getClassLoader());
@@ -70,6 +79,7 @@ public class Project implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mId);
         dest.writeString(mTitle);
         dest.writeValue(mStartDate);
         dest.writeValue(mEndDate);

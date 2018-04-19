@@ -62,7 +62,7 @@ public class ProjectConfigActivity extends Activity {
                 int endYear = Integer.valueOf(endDate[0]);
                 String title = mProjectTitle.getText().toString();
 
-                Project newProject = new Project(title, new GregorianCalendar(startYear,startMonth,startDay), new GregorianCalendar(endYear,endMonth,endDay));
+                Project newProject = new Project(0,title, new GregorianCalendar(startYear,startMonth-1,startDay), new GregorianCalendar(endYear,endMonth-1,endDay));
                 Intent data = new Intent();
                 data.putExtra(NEW_PROJECT, newProject);
                 setResult(RESULT_OK, data);

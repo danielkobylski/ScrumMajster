@@ -14,8 +14,6 @@ public class ProjectActivity extends AppCompatActivity {
 
     private static final String PROJECT = "com.ciastkaipiwo.android.scrummajster.project";
     private static final int REQUEST_CODE_ADD_SPRINT = 1;
-
-
     
     private TextView mSprintDetails;
     private Project mProject;
