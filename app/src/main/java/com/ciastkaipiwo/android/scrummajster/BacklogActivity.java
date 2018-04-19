@@ -47,6 +47,7 @@ public class BacklogActivity extends AppCompatActivity {
         mDatabaseHelper = new ProjectsDBHelper(this);
 
         projectId = getIntent().getIntExtra(PROJECT_ID, -1);
+        System.out.println(projectId);
         mRecyclerView = (RecyclerView) findViewById(R.id.backlog_recycler_view);
         mTasksAdapter = new TasksAdapter(mTasksList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -84,7 +85,7 @@ public class BacklogActivity extends AppCompatActivity {
     }
 
     public static Intent newIntent(Context packageContext, Project project){
-        Intent intent = new Intent(packageContext, ProjectActivity.class);
+        Intent intent = new Intent(packageContext, BacklogActivity.class);
         intent.putExtra(PROJECT_ID, project.getId());
         return intent;
     }

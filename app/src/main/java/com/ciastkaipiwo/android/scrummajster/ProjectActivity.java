@@ -27,7 +27,7 @@ public class ProjectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_project);
 
         mProject = getIntent().getParcelableExtra(PROJECT);
-
+        System.out.println(mProject.getId());
         mSprintDetails = (TextView) findViewById(R.id.sprint_details);
         mSprintContainer = (LinearLayout) findViewById(R.id.sprint_container);
 
@@ -57,7 +57,7 @@ public class ProjectActivity extends AppCompatActivity {
         mBacklogContainer.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ProjectActivity.this, BacklogActivity.class);
+                Intent intent = BacklogActivity.newIntent(ProjectActivity.this, mProject);
                 startActivity(intent);
             }
         });

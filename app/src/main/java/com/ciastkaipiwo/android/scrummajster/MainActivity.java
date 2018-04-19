@@ -87,7 +87,9 @@ public class MainActivity extends AppCompatActivity {
         Cursor data = mDatabaseHelper.getProjects();
         while (data.moveToNext()) {
             int id = data.getInt(0);
+            System.out.println(id);
             String title = data.getString(1);
+            System.out.println(title);
             GregorianCalendar startDate = new GregorianCalendar();
             GregorianCalendar endDate = new GregorianCalendar();
             startDate.setTimeInMillis(data.getLong(2));
