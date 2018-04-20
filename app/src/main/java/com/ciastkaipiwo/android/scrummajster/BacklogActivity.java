@@ -21,6 +21,7 @@ import java.util.List;
 public class BacklogActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_ADD_TASK = 1;
+    private static final int REQUEST_CODE_EDIT_TASK = 2;
     private static final String PROJECT_ID = "com.ciastkaipiwo.android.scrummajster.project_id";
     private FloatingActionButton mPlus;
     private ProjectsDBHelper mDatabaseHelper;
@@ -32,8 +33,11 @@ public class BacklogActivity extends AppCompatActivity {
 
     public void onResume() {
         super.onResume();
-        mRecyclerView.setAdapter(mTasksAdapter);
+        if (getIntent().getIntExtra("refresher", -1) == 1) {
+            finish();
+        }
         initTasksData();
+        mRecyclerView.setAdapter(mTasksAdapter);
     }
 
     @Override
@@ -43,7 +47,6 @@ public class BacklogActivity extends AppCompatActivity {
         mDatabaseHelper = new ProjectsDBHelper(this);
 
         projectId = getIntent().getIntExtra(PROJECT_ID, -1);
-        System.out.println(projectId);
         mRecyclerView = (RecyclerView) findViewById(R.id.backlog_recycler_view);
         mTasksAdapter = new TasksAdapter(mTasksList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -60,6 +63,7 @@ public class BacklogActivity extends AppCompatActivity {
                 startActivityForResult(intent, REQUEST_CODE_ADD_TASK);
             }
         });
+
     }
 
     @Override
@@ -74,6 +78,12 @@ public class BacklogActivity extends AppCompatActivity {
             mDatabaseHelper.addTask(projectId,-1,TaskConfigActivity.getNewTask(data));
             Toast.makeText(BacklogActivity.this, "Pomyslnie dodano task: "+String.valueOf(TaskConfigActivity.getNewTask(data).getTime()), Toast.LENGTH_LONG).show();
         }
+        else if (requestCode == REQUEST_CODE_EDIT_TASK) {
+            if (data == null) {
+                return;
+            }
+            mDatabaseHelper.editTask(TaskConfigActivity.getOldTask(data), (TaskConfigActivity.getNewTask(data)));
+        }
     }
 
     public static Intent newIntent(Context packageContext, Project project){
@@ -82,7 +92,7 @@ public class BacklogActivity extends AppCompatActivity {
         return intent;
     }
 
-    private void initTasksData() {
+    public void initTasksData() {
         mTasksList.clear();
         Cursor data = mDatabaseHelper.getBacklogTasks(projectId);
         while (data.moveToNext()) {

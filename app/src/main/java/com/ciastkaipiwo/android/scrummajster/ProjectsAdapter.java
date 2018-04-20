@@ -82,7 +82,6 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.Projec
             pum.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
-                    Toast.makeText(view.getContext(), menuItem.getTitle(),Toast.LENGTH_SHORT).show();
                     switch (menuItem.getItemId()) {
                         case R.id.delete_project_button: {
                             //mDatabaseHelper.removeProject(projectList.get(position));
@@ -96,7 +95,9 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.Projec
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
                                             mDatabaseHelper.removeProject(projectList.get(position));
-                                            view.getContext().startActivity(new Intent(view.getContext(), MainActivity.class));
+                                            Intent tempIntent = new Intent(new Intent(view.getContext(), MainActivity.class));
+                                            tempIntent.putExtra("refresher", 1);
+                                            view.getContext().startActivity(tempIntent);
                                         }
                                     });
 

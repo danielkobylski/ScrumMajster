@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/task_edit_button"
+        android:title = "Edit task"
+        android:visible = "true" />
+    <item
+        android:id="@+id/task_delete_button"
+        android:title = "Delete task"
+        android:visible = "true" />
+    <item
+        android:id="@+id/task_add_to_backlog_button"
+        android:title = "Back to Backlog"
+        android:visible = "true" />
+</menu>

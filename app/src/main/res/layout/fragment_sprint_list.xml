@@ -1,14 +1,30 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.ciastkaipiwo.android.scrummajster.SprintListFragment">
 
-
+<android.support.constraint.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="list sprint"
         android:layout_centerInParent="true"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add_button_sprint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@android:drawable/ic_input_add"
+        android:tint="@android:color/white"
+        app:backgroundTint="#006064"/>
+</android.support.constraint.ConstraintLayout>
 
 </FrameLayout>

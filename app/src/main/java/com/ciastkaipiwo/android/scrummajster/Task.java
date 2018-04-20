@@ -26,6 +26,7 @@ public class Task implements Parcelable {
     }
 
     public int getId() {return mId;}
+
     public String getStory() {
         return mStory;
     }

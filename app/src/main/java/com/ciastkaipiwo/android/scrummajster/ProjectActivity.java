@@ -40,7 +40,7 @@ public class ProjectActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(ProjectActivity.this,SprintMainActivity.class);
+                Intent intent = new Intent(ProjectActivity.this, SprintMainActivity.class);
                 startActivity(intent);
                 //if (mProject.getSprints().size() == 0) {
                     //Intent intent = new Intent(ProjectActivity.this, SprintConfigActivity.class);
