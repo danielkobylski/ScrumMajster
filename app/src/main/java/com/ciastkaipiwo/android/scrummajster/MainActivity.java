@@ -36,9 +36,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+
+        if (getIntent().getIntExtra("refresher", -1) == 1) {
+            finish();
+        }
+
         initProjectsData();
         mRecyclerView.setAdapter(mProjectsAdapter);
-
     }
 
     @Override
@@ -46,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mDatabaseHelper = new ProjectsDBHelper(this);
+
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
         mProjectsAdapter = new ProjectsAdapter(mProjectList);
@@ -72,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != Activity.RESULT_OK) {
-                return;
+            return;
         }
         if (requestCode == REQUEST_CODE_ADD) {
             if (data == null) {

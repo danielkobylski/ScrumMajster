@@ -95,7 +95,7 @@ public class SprintConfigActivity extends AppCompatActivity {
                 int endYear = Integer.valueOf(endDate[2]);
 
 
-                Sprint newSprint = new Sprint(new GregorianCalendar(startYear,startMonth,startDay), new GregorianCalendar(endYear,endMonth,endDay));
+                Sprint newSprint = new Sprint(0,new GregorianCalendar(startYear,startMonth,startDay), new GregorianCalendar(endYear,endMonth,endDay));
                 Intent data = new Intent();
                 data.putExtra(NEW_SPRINT, newSprint);
                 setResult(RESULT_OK, data);

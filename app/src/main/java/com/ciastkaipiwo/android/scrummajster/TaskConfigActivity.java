@@ -9,7 +9,9 @@ import android.widget.EditText;
 
 public class TaskConfigActivity extends AppCompatActivity{
     private static final String EXTRA_TASK = "com.example.angela.backlogactivity.extra_task";
-    private static final String TASK_TO_EDIT = "com.example.angela.backlogactivity.task_to_edit";
+    private static final String TASK_TO_EDIT = "com.ciastkaipiwo.android.scrummajster.task_to_edit";
+    private static final String OLD_TASK = "com.ciastkaipiwo.android.scrummajster.old_task";
+
     private Button mOK;
     private EditText mName;
     private EditText mWeight;
@@ -43,6 +45,7 @@ public class TaskConfigActivity extends AppCompatActivity{
                 Task newTask = new Task(0, Name, Weight, Time);
                 Intent data = new Intent();
                 data.putExtra(EXTRA_TASK, newTask);
+                data.putExtra(OLD_TASK, mTaskToEdit);
                 setResult(RESULT_OK, data);
                 finish();
             }
@@ -51,6 +54,10 @@ public class TaskConfigActivity extends AppCompatActivity{
 
     public static Task getNewTask(Intent result) {
         return (Task) result.getParcelableExtra(EXTRA_TASK);
+    }
+
+    public static Task getOldTask(Intent result) {
+        return (Task) result.getParcelableExtra(OLD_TASK);
     }
 
     public static Intent newIntent(Context packageContext, Task task){

@@ -79,7 +79,7 @@ public class ProjectsDBHelper extends SQLiteOpenHelper {
     }
 
     public Cursor getBacklogTasks(int project_id) {
-        String query = "SELECT * FROM " + TasksTable.NAME + " WHERE project_id = " + project_id + " AND sprint_id = -1";
+        String query = "SELECT * FROM " + TasksTable.NAME + " WHERE project_id = " + project_id + " AND sprint_id is NULL";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor data = db.rawQuery(query, null);
         return data;
@@ -166,17 +166,25 @@ public class ProjectsDBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean addTask (int project_id, int sprint, Task task) {
+    public boolean addTask (int project_id, int sprint_id, Task task) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(TasksTable.Cols.PROJECT_ID, project_id);
-        values.put(TasksTable.Cols.SPRINT_ID, sprint);
+        //values.put(TasksTable.Cols.SPRINT_ID, sprint_id);
+
+        if (sprint_id == -1) {
+            values.putNull(TasksTable.Cols.SPRINT_ID);
+        } else {
+            values.put(TasksTable.Cols.SPRINT_ID, sprint_id);
+        }
+
         values.put(TasksTable.Cols.STORY, task.getStory());
         values.put(TasksTable.Cols.WEIGHT, task.getWeight());
         values.put(TasksTable.Cols.TIME, task.getTime());
 
 
         long result = db.insert(TasksTable.NAME, null, values);
+        System.out.println("Result: " + result);
         if (result == -1) {
             return false;
         } else {
