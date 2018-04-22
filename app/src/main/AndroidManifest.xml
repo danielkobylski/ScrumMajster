@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ciastkaipiwo.android.scrummajster">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".RegistrationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,8 +26,11 @@
         <activity android:name=".KanbanActivity" />
         <activity android:name=".BacklogActivity" />
         <activity android:name=".TaskConfigActivity" />
-        <activity android:name=".SprintMainActivity" android:label="Sprints"/>
+        <activity
+            android:name=".SprintMainActivity"
+            android:label="Sprints" />
         <activity android:name=".TaskActivity" />
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

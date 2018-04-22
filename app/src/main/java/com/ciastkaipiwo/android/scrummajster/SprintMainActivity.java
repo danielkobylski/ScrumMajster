@@ -1,8 +1,6 @@
 package com.ciastkaipiwo.android.scrummajster;
 
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -10,11 +8,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.content.Intent;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +22,7 @@ public class SprintMainActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         // Add Fragments to adapter one by one
         adapter.addFragment(new ActiveSprintFragment(), "Active");
-        adapter.addFragment(new SprintListFragment(), "All");
+        adapter.addFragment(new SprintListFragment_old(), "All");
 
         viewPager.setAdapter(adapter);
 
