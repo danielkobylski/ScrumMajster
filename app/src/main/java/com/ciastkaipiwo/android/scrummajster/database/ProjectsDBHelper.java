@@ -9,12 +9,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.ciastkaipiwo.android.scrummajster.Project;
 import com.ciastkaipiwo.android.scrummajster.Sprint;
 import com.ciastkaipiwo.android.scrummajster.Task;
+import com.ciastkaipiwo.android.scrummajster.database.ProjectDBSchema.MiniTasksTable;
 import com.ciastkaipiwo.android.scrummajster.database.ProjectDBSchema.ProjectTable;
 import com.ciastkaipiwo.android.scrummajster.database.ProjectDBSchema.SprintsTable;
 import com.ciastkaipiwo.android.scrummajster.database.ProjectDBSchema.TasksTable;
-import com.ciastkaipiwo.android.scrummajster.database.ProjectDBSchema.MiniTasksTable;
-
-import java.util.Date;
 
 /**
  * Created by Daniel on 18.04.2018.
@@ -130,7 +128,6 @@ public class ProjectsDBHelper extends SQLiteOpenHelper {
     public boolean addSprint(int project_id, Sprint sprint) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-
         values.put(SprintsTable.Cols.PROJECT_ID, project_id);
         values.put(SprintsTable.Cols.START_DATE, sprint.getStartDate().getTimeInMillis());
         values.put(SprintsTable.Cols.END_DATE, sprint.getEndDate().getTimeInMillis());

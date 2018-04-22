@@ -3,7 +3,6 @@ package com.ciastkaipiwo.android.scrummajster;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -40,7 +39,7 @@ public class ProjectActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(ProjectActivity.this,SprintMainActivity.class);
+                Intent intent = SprintMainActivity.newIntent(ProjectActivity.this, mProject);
                 startActivity(intent);
                 //if (mProject.getSprints().size() == 0) {
                     //Intent intent = new Intent(ProjectActivity.this, SprintConfigActivity.class);

@@ -7,10 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-public class SprintListFragment extends Fragment {
+public class SprintListFragment_old extends Fragment {
 
 
-    public SprintListFragment() {
+    public SprintListFragment_old() {
         // Required empty public constructor
     }
 
