@@ -23,7 +23,7 @@ public class SprintActivity extends AppCompatActivity {
     private Sprint mSprint;
     private Task mTask;
     private RecyclerView recyclerView;
-    private SprintAdapter mAdapter;
+    private SprintsAdapter mAdapter;
 
 
 
@@ -70,8 +70,7 @@ public class SprintActivity extends AppCompatActivity {
         else {textViewTask.setText(getString(R.string.noempty_sprint));}
 
 
-
-        mAdapter = new SprintAdapter(mSprint.getTasksList());
+        //mAdapter = new SprintsAdapter(mSprint.getTasksList());
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

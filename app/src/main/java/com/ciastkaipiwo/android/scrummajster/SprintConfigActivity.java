@@ -1,6 +1,7 @@
 package com.ciastkaipiwo.android.scrummajster;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -12,6 +13,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -19,6 +21,8 @@ import java.util.GregorianCalendar;
 public class SprintConfigActivity extends AppCompatActivity {
 
     private static final String NEW_SPRINT = "com.ciastkaipiwo.android.scrummajster.new_sprint";
+    private static final String SPRINT_TO_EDIT = "com.ciastkaipiwo.android.scrummajster.sprint_to_edit";
+    private static final String OLD_SPRINT = "com.ciastkaipiwo.android.scrummajster.old_sprint";
 
     EditText nameEditText;
     TextView startEditText;
@@ -30,14 +34,23 @@ public class SprintConfigActivity extends AppCompatActivity {
     int month = cal.get(Calendar.MONTH);
     int day = cal.get(Calendar.DAY_OF_MONTH);
     Button okButton;
+    private Sprint mSprintToEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sprint_config);
-
-
         startEditText = (TextView) findViewById(R.id.sprintStartDate);
+        endEditText = (TextView) findViewById(R.id.sprintEndDate);
+
+        mSprintToEdit = getIntent().getParcelableExtra(SPRINT_TO_EDIT);
+
+        if (mSprintToEdit != null) {
+            startEditText.setText(new SimpleDateFormat("dd/MM/yyyy").format(mSprintToEdit.getStartDate().getTimeInMillis()));
+            endEditText.setText(new SimpleDateFormat("dd/MM/yyyy").format(mSprintToEdit.getEndDate().getTimeInMillis()));
+        }
+
+
         startEditText.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -57,7 +70,7 @@ public class SprintConfigActivity extends AppCompatActivity {
             }
         };
 
-        endEditText = (TextView) findViewById(R.id.sprintEndDate);
+
         endEditText.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -88,16 +101,17 @@ public class SprintConfigActivity extends AppCompatActivity {
                 String[] startDate = startEditText.getText().toString().split("/",0);
                 String[] endDate = endEditText.getText().toString().split("/",0);
                 int startDay = Integer.valueOf(startDate[0]);
-                int startMonth = Integer.valueOf(startDate[1]);
+                int startMonth = Integer.valueOf(startDate[1])-1;
                 int startYear = Integer.valueOf(startDate[2]);
                 int endDay = Integer.valueOf(endDate[0]);
-                int endMonth = Integer.valueOf(endDate[1]);
+                int endMonth = Integer.valueOf(endDate[1])-1;
                 int endYear = Integer.valueOf(endDate[2]);
 
 
                 Sprint newSprint = new Sprint(0,new GregorianCalendar(startYear,startMonth,startDay), new GregorianCalendar(endYear,endMonth,endDay));
                 Intent data = new Intent();
                 data.putExtra(NEW_SPRINT, newSprint);
+                data.putExtra(OLD_SPRINT, mSprintToEdit);
                 setResult(RESULT_OK, data);
                 finish();
             }
@@ -106,6 +120,16 @@ public class SprintConfigActivity extends AppCompatActivity {
 
     public static Sprint getNewSprint(Intent result) {
         return (Sprint) result.getParcelableExtra(NEW_SPRINT);
+    }
+
+    public static Intent newIntent(Context packageContext, Sprint sprint){
+        Intent intent = new Intent(packageContext, SprintConfigActivity.class);
+        intent.putExtra(SPRINT_TO_EDIT,sprint);
+        return intent;
+    }
+
+    public static Sprint getOldSprint(Intent result) {
+        return (Sprint) result.getParcelableExtra(OLD_SPRINT);
     }
 
 }

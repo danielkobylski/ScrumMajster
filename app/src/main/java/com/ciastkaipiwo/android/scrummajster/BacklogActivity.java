@@ -21,7 +21,8 @@ import java.util.List;
 public class BacklogActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_ADD_TASK = 1;
-    private static final int REQUEST_CODE_EDIT_TASK = 2;
+    private static final int REQUEST_CODE_EDIT_TASK = 3;
+    private static final int REQUEST_CODE_ADD_TO_SPRINT = 4;
     private static final String PROJECT_ID = "com.ciastkaipiwo.android.scrummajster.project_id";
     private FloatingActionButton mPlus;
     private ProjectsDBHelper mDatabaseHelper;
@@ -47,8 +48,10 @@ public class BacklogActivity extends AppCompatActivity {
         mDatabaseHelper = new ProjectsDBHelper(this);
 
         projectId = getIntent().getIntExtra(PROJECT_ID, -1);
+        System.out.println("BacklogActivity PROJECT ID: " + projectId);
+
         mRecyclerView = (RecyclerView) findViewById(R.id.backlog_recycler_view);
-        mTasksAdapter = new TasksAdapter(mTasksList);
+        mTasksAdapter = new TasksAdapter(mTasksList, projectId);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -84,6 +87,12 @@ public class BacklogActivity extends AppCompatActivity {
             }
             mDatabaseHelper.editTask(TaskConfigActivity.getOldTask(data), (TaskConfigActivity.getNewTask(data)));
         }
+        //else if (requestCode == REQUEST_CODE_ADD_TO_SPRINT) {
+        //    if (data == null) {
+        //        return
+        //    }
+        //    mDatabaseHelper.moveTask()
+        //}
     }
 
     public static Intent newIntent(Context packageContext, Project project){
@@ -97,7 +106,6 @@ public class BacklogActivity extends AppCompatActivity {
         Cursor data = mDatabaseHelper.getBacklogTasks(projectId);
         while (data.moveToNext()) {
             int id = data.getInt(0);
-            System.out.println(id);
             String story = data.getString(3);
             int weight = data.getInt(4);
             int time = data.getInt(5);

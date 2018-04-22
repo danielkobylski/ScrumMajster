@@ -3,57 +3,71 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:focusable="true"
+    android:orientation="vertical"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
     android:paddingBottom="16dp"
+    android:focusable="true"
     android:clickable="true"
-    android:background="?android:attr/selectableItemBackground"
-    android:orientation="vertical">
+    android:background="?android:attr/selectableItemBackground">
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/cv_main"
-        android:orientation="vertical"
-        >
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:orientation="vertical">
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/llhorizontal">
-
-
-        <TextView
-            android:id="@+id/weight"
-            android:textColor="@android:color/black"
-            android:textSize="28dp"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp" />
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
 
-        <TextView
-            android:id="@+id/story"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            android:textSize="24dp"/>
-    </LinearLayout>
-    <TextView
-        android:id="@+id/time"
+                <TextView
+                    android:id="@+id/sprint_name"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_alignParentTop="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-        android:layout_below="@id/llhorizontal"
-        android:layout_width="match_parent"
-        android:textColor="@android:color/black"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"/>
-    </LinearLayout>
+
+                <TextView
+                    android:id="@+id/sprint_start_date"
+                    android:layout_below="@id/sprint_name"
+                    android:layout_width="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/sprint_end_date"
+                    android:layout_below="@id/sprint_start_date"
+                    android:layout_width="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:id="@+id/sprint_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_square_edit_outline_grey600_36dp"
+                android:background="@null"
+                android:layout_marginRight="20dp"
+                android:layout_gravity="center_vertical|right"/>
+        </LinearLayout>
 
     </android.support.v7.widget.CardView>
-
 </RelativeLayout>
+

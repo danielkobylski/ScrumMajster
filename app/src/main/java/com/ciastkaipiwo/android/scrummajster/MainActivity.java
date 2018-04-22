@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private ProjectsAdapter mProjectsAdapter;
     private FloatingActionButton mAddButton;
     private ProjectsDBHelper mDatabaseHelper;
+
     @Override
     public void onResume() {
         super.onResume();
@@ -69,8 +70,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-
-        //initProjectsData();
 
     }
 

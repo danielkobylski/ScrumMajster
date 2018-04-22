@@ -17,7 +17,7 @@ public class TaskActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final String TASKPROJECT = "com.example.angela.backlogactivity.taskproject";
     private static final int REQUEST_CODE_ADD_SMTH = 1;
-    private static final int REQUEST_CODE_EDIT_TASK = 2;
+    private static final int REQUEST_CODE_EDIT_TASK = 3;
 
     private Task mTask;
     private ImageButton mDelete;

@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -17,19 +18,24 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ciastkaipiwo.android.scrummajster.database.ProjectsDBHelper;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHolder>{
 
     private List<Task> tasksList;
+    private int mProjectId;
 
-    public TasksAdapter(List<Task> tasksList) {
+
+    public TasksAdapter(List<Task> tasksList, int projectId) {
         this.tasksList = tasksList;
+        mProjectId = projectId;
     }
 
     @Override
@@ -56,6 +62,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
     public class TaskViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private static final int REQUEST_CODE_EDIT_TASK = 2;
+        private static final int REQUEST_CODE_ADD_TO_SPRINT = 4;
 
         public TextView name;
         public TextView weight;
@@ -63,8 +70,6 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
         public int position;
         public ImageButton mTaskMenu;
         public ProjectsDBHelper mDatabaseHelper;
-        //private ArrayList<Task> taskList;
-
 
         public TaskViewHolder(final View view, List<Task>taskList) {
             super(view);
@@ -103,10 +108,22 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
                             break;
                         }
                         case R.id.task_add_to_sprint_button: {
+                            //Intent intent = new Intent(view.getContext(), SprintChoiceActivity.class);
+                            //((Activity) view.getContext()).startActivityForResult(intent, REQUEST_CODE_ADD_TO_SPRINT);
+                           mDatabaseHelper.moveTask(mProjectId,tasksList.get(position),getActiveSprint().getId());
+                           System.out.println(view.getContext()+" " + view.getContext().getClass());
+                           Intent tempIntent = new Intent(view.getContext(), view.getContext().getClass());
+                           tempIntent.putExtra("refresher", 1);
+                           view.getContext().startActivity(tempIntent);
                             break;
                         }
 
                         case R.id.task_add_to_backlog_button: {
+                            mDatabaseHelper.moveTask(mProjectId,tasksList.get(position),-1);
+                            System.out.println(view.getContext()+" " + view.getContext().getClass());
+                            Intent tempIntent = new Intent(view.getContext(), view.getContext().getClass());
+                            tempIntent.putExtra("refresher", 1);
+                            view.getContext().startActivity(tempIntent);
                             break;
                         }
                     }
@@ -122,14 +139,35 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
             });
 
         }
+        //===============================================================////
+        //// FUNKCJA DO USUNIECIA PO ZAIMPLEMENTOWANIU SPRINT ADAPTERA   ////
+        //===============================================================////
+        private Sprint getActiveSprint() {
+            Cursor data = mDatabaseHelper.getSprints(mProjectId);
+            ArrayList<Sprint> sprints = new ArrayList<Sprint>();
+            long today = System.currentTimeMillis();
+            while (data.moveToNext()) {
+                long startDate = data.getLong(2);
+                long endDate = data.getLong(3);
+                if (today >= startDate && today <= endDate) {
+                    int id = data.getInt(0);
+                    GregorianCalendar gStartDate = new GregorianCalendar();
+                    GregorianCalendar gEndDate = new GregorianCalendar();
+                    gStartDate.setTimeInMillis(startDate);
+                    gEndDate.setTimeInMillis(endDate);
+                    return new Sprint(id, gStartDate,gEndDate);
+                }
+            }
+            return null;
+        }
 
 
         @Override
         public void onClick(View v){
-            //Intent intent = TaskActivity.newIntent(v.getContext(), tasksList.get(this.position));
-            //intent.putExtra("task",this.taskList.get(this.position));
-            //intent.putExtra("position",position);
-            //.getContext().startActivity(intent);
+            if(!String.valueOf(v.getContext().getClass()).equals("class com.ciastkaipiwo.android.scrummajster.BacklogActivity")) {
+                Intent intent = KanbanActivity.newIntent(v.getContext(), tasksList.get(this.position));
+                v.getContext().startActivity(intent);
+            }
         }
     }
 

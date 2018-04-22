@@ -14,7 +14,9 @@ import com.ciastkaipiwo.android.scrummajster.database.ProjectDBSchema.SprintsTab
 import com.ciastkaipiwo.android.scrummajster.database.ProjectDBSchema.TasksTable;
 import com.ciastkaipiwo.android.scrummajster.database.ProjectDBSchema.MiniTasksTable;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by Daniel on 18.04.2018.
@@ -26,6 +28,14 @@ public class ProjectsDBHelper extends SQLiteOpenHelper {
 
     public ProjectsDBHelper (Context context) {
         super(context, DATABASE_NAME, null, VERSION);
+    }
+
+
+    @Override
+    public void onConfigure(SQLiteDatabase db) {
+        super.onConfigure(db);
+        //
+        db.setForeignKeyConstraintsEnabled(true);
     }
 
     @Override
@@ -51,8 +61,8 @@ public class ProjectsDBHelper extends SQLiteOpenHelper {
                 TasksTable.Cols.STORY + ", " +
                 TasksTable.Cols.WEIGHT + ", " +
                 TasksTable.Cols.TIME  +  ", " +
-                "foreign key (sprint_id) references sprints(sprint_id) on delete set null," +
-                "foreign key (project_id) references projecs(project_id) on delete cascade)";
+                "foreign key (sprint_id) references sprints(sprint_id) on delete set NULL," +
+                "foreign key (project_id) references projects(project_id) on delete cascade)";
 
         String createTableMiniTasks = "create table " + MiniTasksTable.NAME + "(" +
                 MiniTasksTable.Cols.MINI_TASK_ID + " integer primary key autoincrement, " +
@@ -86,6 +96,21 @@ public class ProjectsDBHelper extends SQLiteOpenHelper {
         Cursor data = db.rawQuery(query, null);
         return data;
     }
+
+    public Cursor getSprintTasks (int project_id, int sprint_id) {
+        String query = "SELECT * FROM " + TasksTable.NAME + " WHERE project_id = " + project_id + " AND sprint_id = " + sprint_id;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
+    public Cursor getSprints(int project_id) {
+        String query = "SELECT * FROM " + SprintsTable.NAME + " WHERE project_id = " + project_id;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
 
     public boolean addProject (Project project) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -213,6 +238,71 @@ public class ProjectsDBHelper extends SQLiteOpenHelper {
         values.put(TasksTable.Cols.WEIGHT, newTask.getWeight());
         values.put(TasksTable.Cols.TIME, newTask.getTime());
         long result = db.update(TasksTable.NAME,values,TasksTable.Cols.TASK_ID + "=" + oldTask.getId() ,null);
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean moveTask(int project_id, Task task, int sprint_id) {
+
+        ContentValues values = new ContentValues();
+        SQLiteDatabase db = getWritableDatabase();
+        System.out.println("DB SPRINT ID: " + sprint_id);
+        if (sprint_id == -1) {
+            values.putNull(TasksTable.Cols.SPRINT_ID);
+        } else {
+            values.put(TasksTable.Cols.SPRINT_ID, sprint_id);
+        }
+            long result = db.update(TasksTable.NAME,values,TasksTable.Cols.TASK_ID + "=" + task.getId(),null);
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean addMiniTask(int task_id, String story) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(MiniTasksTable.Cols.TASK_ID, task_id);
+        values.put(MiniTasksTable.Cols.STORY, story);
+        values.put(MiniTasksTable.Cols.KANBAN_FLAG, 1);
+
+        long result = db.insert(MiniTasksTable.NAME, null, values);
+
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean moveMiniTask(int mini_task_id, int kanban_flag) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(MiniTasksTable.Cols.KANBAN_FLAG, kanban_flag);
+
+        long result = db.update(MiniTasksTable.NAME, values, MiniTasksTable.Cols.MINI_TASK_ID + " = " + mini_task_id, null);
+
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean editMiniTask(int mini_task_id, String story) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(MiniTasksTable.Cols.STORY, story);
+
+        long result = db.update(MiniTasksTable.NAME, values, MiniTasksTable.Cols.MINI_TASK_ID + " = " + mini_task_id, null);
+
         if (result == -1) {
             return false;
         } else {

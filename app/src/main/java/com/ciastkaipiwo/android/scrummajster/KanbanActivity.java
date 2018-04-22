@@ -73,7 +73,6 @@ public class KanbanActivity extends AppCompatActivity {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        // mRecyclerView.setAdapter(mAdapterToDo);
 
 
         mAdapterDoing = new DoingAdapter(mSprintTask.getDoing(), new DoingListener() {

@@ -30,7 +30,6 @@ public class ProjectActivity extends AppCompatActivity {
 
         mProject = getIntent().getParcelableExtra(PROJECT);
 
-       // mSprintDetails = (TextView) findViewById(R.id.sprint_details);
         mSprintContainer = (LinearLayout) findViewById(R.id.sprint_container);
 
         updateUI();
@@ -39,20 +38,8 @@ public class ProjectActivity extends AppCompatActivity {
         mSprintContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent intent = new Intent(ProjectActivity.this, SprintMainActivity.class);
+                Intent intent = SprintMainActivity.newIntent(ProjectActivity.this, mProject);
                 startActivity(intent);
-                //if (mProject.getSprints().size() == 0) {
-                    //Intent intent = new Intent(ProjectActivity.this, SprintConfigActivity.class);
-                   // startActivityForResult(intent, REQUEST_CODE_ADD_SPRINT);
-               // }
-
-              // else {
-
-                   // Sprint sprint = mProject.getSprints().get(mProject.getSprints().size() - 1);
-                   // Intent intent = SprintActivity.newIntent(ProjectActivity.this,sprint);
-                   // startActivity(intent);
-               // }
             }
         });
 
