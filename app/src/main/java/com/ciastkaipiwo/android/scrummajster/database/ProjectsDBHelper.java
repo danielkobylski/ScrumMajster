@@ -212,7 +212,6 @@ public class ProjectsDBHelper extends SQLiteOpenHelper {
 
 
         long result = db.insert(TasksTable.NAME, null, values);
-        System.out.println("Result: " + result);
         if (result == -1) {
             return false;
         } else {
@@ -249,7 +248,6 @@ public class ProjectsDBHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         SQLiteDatabase db = getWritableDatabase();
-        System.out.println("DB SPRINT ID: " + sprint_id);
         if (sprint_id == -1) {
             values.putNull(TasksTable.Cols.SPRINT_ID);
         } else {

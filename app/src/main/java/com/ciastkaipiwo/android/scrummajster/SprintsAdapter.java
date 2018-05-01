@@ -26,11 +26,21 @@ public class SprintsAdapter extends RecyclerView.Adapter<SprintsAdapter.SprintVi
     private static final String TASK_TO_MOVE = "com.ciastkaipiwo.android.scrummajster.task_to_move";
     private List<Sprint> mSprintsList;
     private int mProjectId;
+    private Task mTaskToMove;
 
 
     public SprintsAdapter(List<Sprint> sprintsList, int projectId) {
         this.mSprintsList = sprintsList;
-        mProjectId = projectId;
+        this.mProjectId = projectId;
+        this.mTaskToMove = null;
+    }
+
+    public void setTaskToMove(Task task) {
+        this.mTaskToMove = task;
+    }
+
+    public Task getTaskToMove() {
+        return mTaskToMove;
     }
 
     @Override
@@ -59,6 +69,8 @@ public class SprintsAdapter extends RecyclerView.Adapter<SprintsAdapter.SprintVi
     public class SprintViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private static final int REQUEST_CODE_EDIT_SPRINT = 2;
+        private static final String SPRINT = "com.ciastkaipiwo.android.scrummajster.sprint";
+        private static final String PROJECT_ID = "com.ciastkaipiwo.android.scrummajster.project_id" ;
 
 
         public TextView sprintName;
@@ -78,6 +90,10 @@ public class SprintsAdapter extends RecyclerView.Adapter<SprintsAdapter.SprintVi
             mDatabaseHelper = new ProjectsDBHelper(view.getContext());
             mSprintMenu = (ImageButton) view.findViewById(R.id.sprint_menu);
 
+            if(String.valueOf(view.getContext().getClass()).equals("class com.ciastkaipiwo.android.scrummajster.SprintChoiceActivity")) {
+                mSprintMenu.setVisibility(View.INVISIBLE);
+                mSprintMenu.setClickable(false);
+            }
             final PopupMenu pum = new PopupMenu(view.getContext(),mSprintMenu);
             pum.inflate(R.menu.sprint_popup_menu);
 
@@ -133,14 +149,23 @@ public class SprintsAdapter extends RecyclerView.Adapter<SprintsAdapter.SprintVi
 
         @Override
         public void onClick(View v) {
-           // if(String.valueOf(v.getContext().getClass()).equals("class com.ciastkaipiwo.android.scrummajster.SprintChoiceActivity")) {
-           //     Intent data = new Intent();
-           //     data.putExtra(SPRINT_CHOSEN, mSprintsList.get(position));
-           //    // data.putExtra(TASK_TO_MOVE, getIntent().getIntExtra());
-           //     ((Activity) v.getContext()).setResult(RESULT_OK, data);
-           //     ((Activity) v.getContext()).finish();
-           // }
+            if(String.valueOf(v.getContext().getClass()).equals("class com.ciastkaipiwo.android.scrummajster.SprintChoiceActivity")) {
+                Intent data = new Intent();
+                data.putExtra(SPRINT_CHOSEN, mSprintsList.get(position));
+                data.putExtra(TASK_TO_MOVE, mTaskToMove);
+               // data.putExtra(TASK_TO_MOVE, getIntent().getIntExtra());
+                ((Activity) v.getContext()).setResult(RESULT_OK, data);
+                ((Activity) v.getContext()).finish();
+            }
+            else {
+                Intent intent = new Intent((Activity) v.getContext(), SprintActivity.class);
+                intent.putExtra(SPRINT, mSprintsList.get(position));
+                intent.putExtra(PROJECT_ID, mProjectId);
+                v.getContext().startActivity(intent);
+            }
         }
+
+
 
     }
 }

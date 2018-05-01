@@ -23,7 +23,12 @@ public class BacklogActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_ADD_TASK = 1;
     private static final int REQUEST_CODE_EDIT_TASK = 3;
     private static final int REQUEST_CODE_ADD_TO_SPRINT = 4;
+
     private static final String PROJECT_ID = "com.ciastkaipiwo.android.scrummajster.project_id";
+    private static final String TASK_TO_MOVE = "com.ciastkaipiwo.android.scrummajster.task_to_move";
+    private static final String SPRINT_CHOSEN = "com.ciastkaipiwo.android.scrummajster.sprint_chosen";
+
+
     private FloatingActionButton mPlus;
     private ProjectsDBHelper mDatabaseHelper;
 
@@ -86,6 +91,15 @@ public class BacklogActivity extends AppCompatActivity {
                 return;
             }
             mDatabaseHelper.editTask(TaskConfigActivity.getOldTask(data), (TaskConfigActivity.getNewTask(data)));
+        }
+
+        else if (requestCode == REQUEST_CODE_ADD_TO_SPRINT) {
+            if (data == null) {
+                return;
+            }
+            Sprint sprintChosen = data.getParcelableExtra(SPRINT_CHOSEN);
+            Task taskToMove = data.getParcelableExtra(TASK_TO_MOVE);
+            mDatabaseHelper.moveTask(projectId, taskToMove, sprintChosen.getId());
         }
         //else if (requestCode == REQUEST_CODE_ADD_TO_SPRINT) {
         //    if (data == null) {

@@ -2,6 +2,7 @@ package com.ciastkaipiwo.android.scrummajster;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -9,80 +10,72 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
+import com.ciastkaipiwo.android.scrummajster.database.ProjectsDBHelper;
+
 import java.text.DateFormat;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class SprintActivity extends AppCompatActivity {
 
-
+    private static final String PROJECT_ID = "com.ciastkaipiwo.android.scrummajster.project_id";
     private static final String SPRINT = "com.ciastkaipiwo.android.scrummajster.sprint";
-    private static final String TASK = "com.ciastkaipiwo.android.scrummajster.task";
 
-
+    private int mProjectId;
     private Sprint mSprint;
-    private Task mTask;
-    private RecyclerView recyclerView;
-    private SprintsAdapter mAdapter;
+    private TextView mSprintStartDate;
+    private TextView mSprintEndDate;
+    private ProjectsDBHelper mDatabaseHelper;
 
+    private List<Task> mTasksList = new ArrayList<>();
+    private RecyclerView mRecyclerView;
+    private TasksAdapter mTasksAdapter;
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        initTasksData();
+        mRecyclerView.setAdapter(mTasksAdapter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sprint);
 
+        mDatabaseHelper = new ProjectsDBHelper(this);
+        mProjectId = getIntent().getIntExtra(PROJECT_ID,-1);
+        mSprint = getIntent().getParcelableExtra(SPRINT);
+        mSprintStartDate = (TextView) findViewById(R.id.sprint_start_date);
+        mSprintEndDate = (TextView) findViewById(R.id.sprint_end_date);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-
-        mSprint = getIntent().getExtras().getParcelable(SPRINT);
-        mTask = getIntent().getExtras().getParcelable(TASK);
-
-        /*
-        mSprint.mTasksList.add(new Task("Task1",1,5));
-        mSprint.mTasksList.add(new Task("Task2",1,7));
-        mSprint.mTasksList.add(new Task("Task3",1,4));
-        mSprint.mTasksList.add(new Task("Task4",2,4));
-        mSprint.mTasksList.add(new Task("Task5",2,3));
-        mSprint.mTasksList.add(new Task("Task6",3,1));
-        mSprint.mTasksList.add(new Task("Task7",4,1));
-*/
-        TextView textViewFirs = (TextView) findViewById (R.id.sprint_first_text);
-        textViewFirs.setText(getString(R.string.sprint_text));
-
-        TextView textViewStartDate = (TextView) findViewById (R.id.sprint_start_date);
-        Date mStartDate = mSprint.getStartDate().getTime();
-        DateFormat defaultDateS = DateFormat.getDateInstance();
-        String startDateString = defaultDateS.format( mStartDate );
-        textViewStartDate.setText(getString(R.string.const_start_date)+" "+startDateString);
-        TextView textViewEndDate = (TextView) findViewById (R.id.sprint_end_date);
-        Date mEndDate = mSprint.getEndDate().getTime();
-        DateFormat defaultDate = DateFormat.getDateInstance();
-        String endDateString = defaultDate.format( mEndDate );
-        textViewEndDate.setText(getString(R.string.const_end_date)+" "+endDateString);
-
-        TextView textViewTask = (TextView) findViewById (R.id.sprint_task_text);
-
-        if (mSprint.mTasksList.isEmpty())
-        {
-            textViewTask.setText(getString(R.string.empty_sprint));
-        }
-        else {textViewTask.setText(getString(R.string.noempty_sprint));}
-
-
-        //mAdapter = new SprintsAdapter(mSprint.getTasksList());
+        mRecyclerView = (RecyclerView) findViewById(R.id.sprint_recycler_view);
+        mTasksAdapter = new TasksAdapter(mTasksList, mProjectId);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        initTasksData();
+        mRecyclerView.setAdapter(mTasksAdapter);
+
+        mSprintStartDate.setText(mSprint.getStartDate().getTime().toString());
+        mSprintEndDate.setText(mSprint.getEndDate().getTime().toString());
 
     }
 
-    public static Intent newIntent(Context packageContext, Sprint sprint){
-        Intent intent = new Intent(packageContext,SprintActivity.class);
-        intent.putExtra(SPRINT,sprint);
-        return intent;
+
+    public void initTasksData() {
+        mTasksList.clear();
+        Cursor data = mDatabaseHelper.getSprintTasks(mProjectId,mSprint.getId());
+        while (data.moveToNext()) {
+            int id = data.getInt(0);
+            String story = data.getString(3);
+            int weight = data.getInt(4);
+            int time = data.getInt(5);
+            mTasksList.add(new Task(id,story, weight, time));
+        }
     }
 
 }
