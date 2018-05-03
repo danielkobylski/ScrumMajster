@@ -13,24 +13,31 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".RegistrationActivity">
+
+        </activity>
+        <activity android:name=".ProjectConfigActivity" />
+        <activity android:name=".ProjectActivity" />
+        <activity android:name=".SprintConfigActivity" />
+        <activity android:name=".SprintActivity" />
+        <activity
+            android:name=".KanbanActivity"
+            android:label="Kanban" />
+        <activity
+            android:name=".BacklogActivity"
+            android:label="Backlog" />
+        <activity android:name=".TaskConfigActivity" />
+        <activity
+            android:name=".SprintMainActivity"
+            android:label="Sprints" />
+        <activity android:name=".TaskActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ProjectConfigActivity" />
-        <activity android:name=".ProjectActivity" />
-        <activity android:name=".SprintConfigActivity" />
-        <activity android:name=".SprintActivity" />
-        <activity android:name=".KanbanActivity" />
-        <activity android:name=".BacklogActivity" />
-        <activity android:name=".TaskConfigActivity" />
-        <activity
-            android:name=".SprintMainActivity"
-            android:label="Sprints" />
-        <activity android:name=".TaskActivity" />
-        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

@@ -38,7 +38,9 @@
                     android:id="@+id/arrow_up_done"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:src="@drawable/arrow_up" />
+                    android:src="@drawable/arrow_up"
+                    android:background="@null"
+                    android:tint="@color/colorAccent"/>
             </LinearLayout>
 
         </RelativeLayout>

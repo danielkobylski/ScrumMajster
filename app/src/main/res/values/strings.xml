@@ -13,7 +13,7 @@
     <string name="empty_sprint">There is no active tasks. Go to Backlog</string>
     <string name="noempty_sprint">Tasks to do:</string>
     <string name="to_do_text">To Do:</string>
-    <string name="doing_text">Doing:</string>
+    <string name="doing_text">In progress:</string>
     <string name="done_text">Done:</string>
     <string name="backlog_add_task">ADD TASK</string>
     <string name="const_new_task">Adding task</string>
@@ -46,6 +46,8 @@
     <string name="first_name">First name</string>
     <string name="last_name">Last name</string>
     <string name="register">Register</string>
+    <string name="login">Log In</string>
+    <string name="signup">Sign Up</string>
 
 
 </resources>

@@ -21,91 +21,29 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-/**
- * Created by Klaudia on 22.04.2018.
- */
-
 public class JSONParser {
 
     static InputStream is = null;
-    static JSONObject jsonObj ;
+    static JSONObject jObj = null;
     static String json = "";
 
-
-    public JSONParser() {}
-
-
-    public JSONObject getJSONFromUrl(final String url) {
-
-
-        try {
-
-            DefaultHttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost(url);
-
-
-            HttpResponse httpResponse = httpClient.execute(httpPost);
-
-            HttpEntity httpEntity = httpResponse.getEntity();
-
-            is = httpEntity.getContent();
-
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-
-
-            // Create a BufferedReader
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    is, "iso-8859-1"), 8);
-            // Declaring string builder
-            StringBuilder str = new StringBuilder();
-            //  string to store the JSON object.
-            String strLine = null;
-
-            // Building while we have string !equal null.
-            while ((strLine = reader.readLine()) != null) {
-                str.append(strLine + "\n");
-            }
-
-            // Close inputstream.
-            is.close();
-            // string builder data conversion  to string.
-            json = str.toString();
-        } catch (Exception e) {
-            Log.e("Error", " something wrong with converting result " + e.toString());
-        }
-
-        // Try block used for pasrseing String to a json object
-        try {
-            jsonObj = new JSONObject(json);
-        } catch (JSONException e) {
-            Log.e("json Parsering", "" + e.toString());
-        }
-
-        // Returning json Object.
-        return jsonObj;
+    // constructor
+    public JSONParser() {
 
     }
 
-
-
+    // function get json from url
+    // by making HTTP POST or GET mehtod
     public JSONObject makeHttpRequest(String url, String method,
                                       List<NameValuePair> params) {
 
-        // Make HTTP request
+        // Making HTTP request
         try {
 
-            // checking request method
+            // check for request method
             if(method == "POST"){
-
-                // now defaultHttpClient object
+                // request method is POST
+                // defaultHttpClient
                 DefaultHttpClient httpClient = new DefaultHttpClient();
                 HttpPost httpPost = new HttpPost(url);
                 httpPost.setEntity(new UrlEncodedFormEntity(params));
@@ -137,27 +75,26 @@ public class JSONParser {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(
                     is, "iso-8859-1"), 8);
-            StringBuilder str = new StringBuilder();
-            String strLine = null;
-            while ((strLine = reader.readLine()) != null) {
-                str.append(strLine + "\n");
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "\n");
             }
             is.close();
-            json = str.toString();
+            json = sb.toString();
         } catch (Exception e) {
-
+            Log.e("Buffer Error", "Error converting result " + e.toString());
         }
 
-        // now will try to parse the string into JSON object
+        // try parse the string to a JSON object
         try {
-            jsonObj = new JSONObject(json);
+            jObj = new JSONObject(json);
         } catch (JSONException e) {
-
+            Log.e("JSON Parser", "Error parsing data " + e.toString());
         }
 
-
-        return jsonObj;
+        // return JSON String
+        return jObj;
 
     }
-
 }

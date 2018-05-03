@@ -27,12 +27,13 @@ public class RegistrationActivity extends AppCompatActivity  {
     private ProgressDialog pDialog;
 
     JSONParser jsonParser = new JSONParser();
-    private static final String LOGIN_URL = "http://127.0.0.1/login.php";
+    private static final String REGISTER_URL = "http://192.168.8.100:8080/users/add";
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_registration);
@@ -60,7 +61,7 @@ class CreateNewUser extends AsyncTask<String, String, String> {
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(RegistrationActivity.this);
-            pDialog.setMessage("Creating Product..");
+            pDialog.setMessage("Wait..");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
             pDialog.show();
@@ -81,13 +82,14 @@ class CreateNewUser extends AsyncTask<String, String, String> {
         params.add(new BasicNameValuePair("first_name", firstName));
         params.add(new BasicNameValuePair("last_name", lastName));
 
-        JSONObject json = jsonParser.makeHttpRequest(LOGIN_URL,"POST", params);
+        JSONObject json = jsonParser.makeHttpRequest(REGISTER_URL,"POST", params);
         Log.d("Create Response", json.toString());
 
         try {
             int success = json.getInt(TAG_SUCCESS);
 
             if (success == 1) {
+
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(i);
 

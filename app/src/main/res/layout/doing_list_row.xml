@@ -37,13 +37,17 @@
                 android:id="@+id/arrow_down_doing"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:src="@drawable/arrow_down" />
+                android:src="@drawable/arrow_down"
+                android:background="@null"
+                android:tint="@color/colorAccent"/>
 
             <ImageButton
                 android:id="@+id/arrow_up_doing"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:src="@drawable/arrow_up" />
+                android:src="@drawable/arrow_up"
+                android:background="@null"
+                android:tint="@color/colorAccent"/>
             </LinearLayout>
 
         </RelativeLayout>
