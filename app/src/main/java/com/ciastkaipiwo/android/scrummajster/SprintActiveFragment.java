@@ -86,9 +86,7 @@ public class SprintActiveFragment extends Fragment {
             mActiveSprintStartDate.setText(mActiveSprint.getStartDate().getTime().toString());
             mActiveSprintEndDate.setText(mActiveSprint.getEndDate().getTime().toString());
         }
-        else {
-            mActiveSprintStartDate.setText("There are no sprints :(");
-        }
+
 
 
         return v;

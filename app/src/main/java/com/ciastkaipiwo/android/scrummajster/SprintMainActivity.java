@@ -25,8 +25,8 @@ import java.util.List;
 public class SprintMainActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_ADD_SPRINT = 1;
-    private static final int REQUEST_CODE_EDIT_SPRINT = 2;
-    private static final int REQUEST_CODE_EDIT_TASK = 3;
+    private static final int REQUEST_CODE_EDIT_SPRINT = 3;
+    private static final int REQUEST_CODE_EDIT_TASK = 2;
     private static final String PROJECT_ID = "com.ciastkaipiwo.android.scrummajster.project_id";
     private static final String ACTIVE_SPRINT = "com.ciastkaipiwo.android.scrummajster.active_sprint";
 

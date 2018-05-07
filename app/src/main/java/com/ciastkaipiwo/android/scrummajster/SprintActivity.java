@@ -1,5 +1,6 @@
 package com.ciastkaipiwo.android.scrummajster;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -22,6 +23,7 @@ public class SprintActivity extends AppCompatActivity {
 
     private static final String PROJECT_ID = "com.ciastkaipiwo.android.scrummajster.project_id";
     private static final String SPRINT = "com.ciastkaipiwo.android.scrummajster.sprint";
+    private static final int REQUEST_CODE_EDIT_TASK = 2;
 
     private int mProjectId;
     private Sprint mSprint;
@@ -75,6 +77,19 @@ public class SprintActivity extends AppCompatActivity {
             int weight = data.getInt(4);
             int time = data.getInt(5);
             mTasksList.add(new Task(id,story, weight, time));
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+        if (requestCode == REQUEST_CODE_EDIT_TASK) {
+            if (data == null) {
+                return;
+            }
+            mDatabaseHelper.editTask(TaskConfigActivity.getOldTask(data), (TaskConfigActivity.getNewTask(data)));
         }
     }
 

@@ -74,7 +74,6 @@ public class KanbanActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-
         mAdapterDoing = new DoingAdapter(mSprintTask.getDoing(), new DoingListener() {
             @Override
             public void DownButtonOnClik(View v, int position) {
