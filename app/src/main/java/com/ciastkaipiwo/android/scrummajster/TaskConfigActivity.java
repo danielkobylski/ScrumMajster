@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -21,6 +22,7 @@ public class TaskConfigActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_task_config);
 
         mOK = (Button) findViewById(R.id.OK);
@@ -38,10 +40,8 @@ public class TaskConfigActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 String Name = mName.getText().toString();
-                String WeightS = mWeight.getText().toString();
-                int Weight = Integer.parseInt(WeightS);
-                String TimeS = mTime.getText().toString();
-                int Time = Integer.parseInt(TimeS);
+                int Weight = Integer.valueOf(mWeight.getText().toString());
+                int Time = Integer.valueOf(mTime.getText().toString());
                 Task newTask = new Task(0, Name, Weight, Time);
                 Intent data = new Intent();
                 data.putExtra(EXTRA_TASK, newTask);

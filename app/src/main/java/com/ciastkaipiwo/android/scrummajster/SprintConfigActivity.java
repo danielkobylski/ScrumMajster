@@ -5,17 +5,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 
 public class SprintConfigActivity extends AppCompatActivity {
@@ -35,6 +38,7 @@ public class SprintConfigActivity extends AppCompatActivity {
     int day = cal.get(Calendar.DAY_OF_MONTH);
     Button okButton;
     private Sprint mSprintToEdit;
+    private List<Sprint> mAllSprintList = new ArrayList<Sprint>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,15 +111,23 @@ public class SprintConfigActivity extends AppCompatActivity {
                 int endMonth = Integer.valueOf(endDate[1])-1;
                 int endYear = Integer.valueOf(endDate[2]);
 
-
-                Sprint newSprint = new Sprint(0,new GregorianCalendar(startYear,startMonth,startDay), new GregorianCalendar(endYear,endMonth,endDay));
-                Intent data = new Intent();
-                data.putExtra(NEW_SPRINT, newSprint);
-                data.putExtra(OLD_SPRINT, mSprintToEdit);
-                setResult(RESULT_OK, data);
-                finish();
+                GregorianCalendar s = new GregorianCalendar(startYear,startMonth,startDay);
+                GregorianCalendar e = new GregorianCalendar(endYear,endMonth,endDay);
+                if (e.after(s)) {
+                    Sprint newSprint = new Sprint(0, s, e);
+                    Intent data = new Intent();
+                    data.putExtra(NEW_SPRINT, newSprint);
+                    data.putExtra(OLD_SPRINT, mSprintToEdit);
+                    setResult(RESULT_OK, data);
+                    finish();
+                }
+                else{
+                    Toast.makeText(SprintConfigActivity.this,"End date is incorrect",Toast.LENGTH_SHORT).show();
+                }
             }
+
         });
+
     }
 
     public static Sprint getNewSprint(Intent result) {
@@ -131,5 +143,6 @@ public class SprintConfigActivity extends AppCompatActivity {
     public static Sprint getOldSprint(Intent result) {
         return (Sprint) result.getParcelableExtra(OLD_SPRINT);
     }
+
 
 }

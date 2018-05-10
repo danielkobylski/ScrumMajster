@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,10 +14,13 @@ import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
-import com.ciastkaipiwo.android.scrummajster.database.ProjectsDBHelper;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -56,7 +60,7 @@ public class SprintsAdapter extends RecyclerView.Adapter<SprintsAdapter.SprintVi
 
         holder.sprintName.setText("Sprint "+(position+1));
         holder.startDate.setText("Start date: " + dateFormat.format(mSprintsList.get(position).getStartDate().getTimeInMillis()));
-        holder.endDate.setText("Start date: " + dateFormat.format(mSprintsList.get(position).getEndDate().getTimeInMillis()));
+        holder.endDate.setText("End date: " + dateFormat.format(mSprintsList.get(position).getEndDate().getTimeInMillis()));
         holder.position = position;
     }
 
@@ -78,7 +82,7 @@ public class SprintsAdapter extends RecyclerView.Adapter<SprintsAdapter.SprintVi
         public TextView endDate;
         public int position;
         public ImageButton mSprintMenu;
-        public ProjectsDBHelper mDatabaseHelper;
+
 
         public SprintViewHolder(final View view) {
             super(view);
@@ -87,7 +91,7 @@ public class SprintsAdapter extends RecyclerView.Adapter<SprintsAdapter.SprintVi
             startDate = (TextView) view.findViewById(R.id.sprint_start_date);
             endDate = (TextView) view.findViewById(R.id.sprint_end_date);
 
-            mDatabaseHelper = new ProjectsDBHelper(view.getContext());
+
             mSprintMenu = (ImageButton) view.findViewById(R.id.sprint_menu);
 
             if(String.valueOf(view.getContext().getClass()).equals("class com.ciastkaipiwo.android.scrummajster.SprintChoiceActivity")) {
@@ -109,10 +113,10 @@ public class SprintsAdapter extends RecyclerView.Adapter<SprintsAdapter.SprintVi
                                     "Yes",
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
-                                            mDatabaseHelper.removeSprint(mSprintsList.get(position));
-                                            Intent tempIntent = new Intent(new Intent(view.getContext(), SprintMainActivity.class));
-                                            tempIntent.putExtra("refresher", 1);
-                                            view.getContext().startActivity(tempIntent);
+                                            removeSprint(position);
+                                            //Intent tempIntent = new Intent(new Intent(view.getContext(), SprintMainActivity.class));
+                                            //tempIntent.putExtra("refresher", 1);
+                                            //view.getContext().startActivity(tempIntent);
                                         }
                                     });
 
@@ -163,6 +167,23 @@ public class SprintsAdapter extends RecyclerView.Adapter<SprintsAdapter.SprintVi
                 intent.putExtra(PROJECT_ID, mProjectId);
                 v.getContext().startActivity(intent);
             }
+        }
+
+        public void removeSprint(final int position){
+            new AsyncHttpClient().delete("http://192.168.8.101:8080/sprints/"+mSprintsList.get(position).getId(), null, new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                    mSprintsList.remove(position);
+                    notifyDataSetChanged();
+                    Log.d("Delete Project result:", "Success");
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                    Log.d("Delete Project result:", "Failure");
+                }
+            });
+
         }
 
 

@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.preference.PreferenceActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,13 +17,10 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ciastkaipiwo.android.scrummajster.database.ProjectsDBHelper;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-
-import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -147,7 +143,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.Projec
     }
 
     public void deleteProject(final int position) {
-        new AsyncHttpClient().delete("http://192.168.8.100:8080/projects/"+projectList.get(position).getId(), null, new AsyncHttpResponseHandler() {
+        new AsyncHttpClient().delete("http://192.168.8.101:8080/projects/"+projectList.get(position).getId(), null, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 projectList.remove(position);

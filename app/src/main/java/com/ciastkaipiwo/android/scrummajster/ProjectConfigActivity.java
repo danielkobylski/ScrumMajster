@@ -6,23 +6,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 public class ProjectConfigActivity extends Activity {
 
@@ -62,7 +57,10 @@ public class ProjectConfigActivity extends Activity {
             public void onClick(View v) {
 
                 String[] startDate = mStartDate.getText().toString().split("\\.",0);
+
                 String[] endDate = mEndDate.getText().toString().split("\\.",0);
+
+
                 int startDay = Integer.valueOf(startDate[2]);
                 int startMonth = Integer.valueOf(startDate[1]);
                 int startYear = Integer.valueOf(startDate[0]);
@@ -71,12 +69,21 @@ public class ProjectConfigActivity extends Activity {
                 int endYear = Integer.valueOf(endDate[0]);
                 String title = mProjectTitle.getText().toString();
 
-                Project newProject = new Project(0,title, new GregorianCalendar(startYear,startMonth-1,startDay), new GregorianCalendar(endYear,endMonth-1,endDay));
-                Intent data = new Intent();
-                data.putExtra(NEW_PROJECT, newProject);
-                data.putExtra(OLD_PROJECT, mProjectToEdit);
-                setResult(RESULT_OK, data);
-                finish();
+                GregorianCalendar s = new GregorianCalendar(startYear,startMonth-1,startDay);
+                GregorianCalendar e = new GregorianCalendar(endYear,endMonth-1,endDay);
+                if(e.after(s)){
+                    Project newProject = new Project(0,title, s, e);
+                    Intent data = new Intent();
+                    data.putExtra(NEW_PROJECT, newProject);
+                    data.putExtra(OLD_PROJECT, mProjectToEdit);
+                    setResult(RESULT_OK, data);
+                    finish();
+                }
+                else{
+                    Toast.makeText(ProjectConfigActivity.this, "End date is incorrect", Toast.LENGTH_SHORT).show();
+                }
+
+
             }
 
         });

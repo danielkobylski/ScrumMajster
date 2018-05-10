@@ -8,23 +8,41 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/ll2">
+
         <TextView
             android:id="@+id/active_sprint_start_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             />
 
         <TextView
             android:id="@+id/active_sprint_end_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             />
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/active_sprint_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="vertical" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/sprint_task_active"
+                android:textColor="@android:color/white"
+                android:background="@color/sprint_backlog_color"
+                android:textSize="20dp"
+                android:layout_below="@+id/ll2"
+                android:padding="10dp"
+                />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/active_sprint_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical" />
+
+
     </LinearLayout>
 
 </FrameLayout>

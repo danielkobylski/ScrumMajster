@@ -2,13 +2,11 @@ package com.ciastkaipiwo.android.scrummajster;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
@@ -36,11 +34,12 @@ public class Project implements Parcelable {
         try {
             mId = Integer.valueOf(project.getString("projectsId"));
             mTitle = project.getString("name");
-            GregorianCalendar date = new GregorianCalendar();
-            date.setTimeInMillis(Long.valueOf(project.getString("startDate")));
-            mStartDate = date;
-            date.setTimeInMillis(Long.valueOf(project.getString("endDate")));
-            mEndDate = date;
+            GregorianCalendar sDate = new GregorianCalendar();
+            GregorianCalendar eDate = new GregorianCalendar();
+            sDate.setTimeInMillis(Long.valueOf(project.getString("startDate")));
+            mStartDate = sDate;
+            eDate.setTimeInMillis(Long.valueOf(project.getString("endDate")));
+            mEndDate = eDate;
             mSprints = new ArrayList<Sprint>();
         } catch(JSONException e) {
             e.printStackTrace();

@@ -8,11 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 
 
@@ -24,11 +22,12 @@ interface ToDoListener {
 public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder> {
 
 
-    private List<String> mToDoListAdapter;
+    private List<MiniTasks> mToDoListAdapter;
     private ToDoListener mListener;
+    private ImageButton Ok;
 
 
-    public ToDoAdapter(List<String> toDoListAdapter, ToDoListener listener) {
+    public ToDoAdapter(List<MiniTasks> toDoListAdapter, ToDoListener listener) {
         this.mToDoListAdapter = toDoListAdapter;
         this.mListener = listener;
     }
@@ -45,7 +44,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
     public void onBindViewHolder(ToDoViewHolder holder, int position) {
 
         holder.mListener = this.mListener;
-        holder.miniTask.setText(mToDoListAdapter.get(position));
+        holder.miniTask.setText(mToDoListAdapter.get(position).getStory());
         holder.position = position;
     }
 

@@ -3,93 +3,97 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
     <LinearLayout
-        android:id="@+id/to_do_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/to_do_text"
-            android:textSize="18dp"
-            android:textColor="@android:color/white"
-            android:background="@android:color/holo_blue_dark"
-            android:padding="5dp"/>
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view_to_do"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:scrollbars="vertical"
-            />
+        android:orientation="vertical">
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/to_do_container"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@+id/recycler_view_to_do">
-            <EditText
-                android:layout_width="275dp"
+            android:orientation="vertical"
+            android:padding="10dp">
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/to_do_edit_text"
-                android:hint="Enter mini task" />
-            <Button
+                android:text="@string/to_do_text"
+                android:textSize="18dp"
+                android:textColor="@android:color/white"
+                android:background="@color/sprint_backlog_color"
+                android:padding="5dp"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_to_do"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:scrollbars="vertical"
+                />
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/to_do_ok_button"
-                android:text="@string/ok_button"/>
+                android:orientation="horizontal"
+                android:layout_below="@+id/recycler_view_to_do">
+                <EditText
+                    android:layout_width="275dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/to_do_edit_text"
+                    android:hint="Enter mini task" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/to_do_ok_button"
+                    android:text="@string/ok_button"
+                    android:textColor="@color/colorAccent"
+                    android:background="@android:color/transparent"
+                    android:textStyle="bold"
+                    android:textSize="20dp"/>
+            </LinearLayout>
         </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/doing_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/doing_text"
+                android:textSize="18dp"
+                android:textColor="@android:color/white"
+                android:background="@color/sprint_backlog_color"
+                android:padding="5dp"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_doing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:scrollbars="vertical" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/done_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/sprint_backlog_color"
+                android:padding="5dp"
+                android:text="@string/done_text"
+                android:textColor="@android:color/white"
+                android:textSize="18dp" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_done"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:scrollbars="vertical" />
+        </LinearLayout>
+
     </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/doing_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/doing_text"
-            android:textSize="18dp"
-            android:textColor="@android:color/white"
-            android:background="@android:color/holo_blue_dark"
-            android:padding="5dp"/>
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view_doing"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:scrollbars="vertical" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/done_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/holo_blue_dark"
-            android:padding="5dp"
-            android:text="@string/done_text"
-            android:textColor="@android:color/white"
-            android:textSize="18dp" />
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view_done"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:scrollbars="vertical" />
-    </LinearLayout>
-
-</LinearLayout>
 </ScrollView>

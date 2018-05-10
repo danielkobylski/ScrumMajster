@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" android:label="Projects">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,15 +19,15 @@
         <activity android:name=".ProjectConfigActivity" />
         <activity android:name=".ProjectActivity" />
         <activity android:name=".SprintConfigActivity" />
-        <activity android:name=".SprintActivity" />
+        <activity android:name=".SprintActivity" android:label="Sprint Details" />
         <activity android:name=".KanbanActivity" />
-        <activity android:name=".BacklogActivity" />
+        <activity android:name=".BacklogActivity" android:label="Backlog"/>
         <activity android:name=".TaskConfigActivity" />
         <activity
             android:name=".SprintMainActivity"
             android:label="Sprints" />
         <activity android:name=".TaskActivity" />
-        <activity android:name=".SprintChoiceActivity"></activity>
+        <activity android:name=".SprintChoiceActivity" android:label="Choose Sprint"></activity>
     </application>
 
 </manifest>

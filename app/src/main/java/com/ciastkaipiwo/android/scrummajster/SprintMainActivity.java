@@ -4,7 +4,6 @@ package com.ciastkaipiwo.android.scrummajster;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -13,20 +12,31 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.ciastkaipiwo.android.scrummajster.database.ProjectsDBHelper;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SprintMainActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_ADD_SPRINT = 1;
-    private static final int REQUEST_CODE_EDIT_SPRINT = 3;
-    private static final int REQUEST_CODE_EDIT_TASK = 2;
+    private static final int REQUEST_CODE_EDIT_SPRINT = 2;
+    private static final int REQUEST_CODE_EDIT_TASK = 3;
     private static final String PROJECT_ID = "com.ciastkaipiwo.android.scrummajster.project_id";
     private static final String ACTIVE_SPRINT = "com.ciastkaipiwo.android.scrummajster.active_sprint";
 
@@ -61,7 +71,7 @@ public class SprintMainActivity extends AppCompatActivity {
         Bundle activeSprint = new Bundle();
         Bundle sprintsList = new Bundle();
 
-        activeSprint.putParcelable(ACTIVE_SPRINT, getActiveSprint());
+
         activeSprint.putInt(PROJECT_ID, mProjectId);
 
         sprintsList.putInt(PROJECT_ID, mProjectId);
@@ -98,20 +108,137 @@ public class SprintMainActivity extends AppCompatActivity {
             if (data == null) {
                 return;
             }
-            mDatabaseHelper.addSprint(mProjectId, SprintConfigActivity.getNewSprint(data));
+            addSprint( SprintConfigActivity.getNewSprint(data));
         } else if (requestCode == REQUEST_CODE_EDIT_TASK) {
             if (data == null) {
                 return;
             }
-            mDatabaseHelper.editTask(TaskConfigActivity.getOldTask(data), (TaskConfigActivity.getNewTask(data)));
+            editTask(TaskConfigActivity.getOldTask(data), (TaskConfigActivity.getNewTask(data)));
+
         }
         else if (requestCode == REQUEST_CODE_EDIT_SPRINT) {
             if (data == null) {
                 return;
             }
-            mDatabaseHelper.editSprint(SprintConfigActivity.getOldSprint(data), SprintConfigActivity.getNewSprint(data));
+            editSprint(SprintConfigActivity.getOldSprint(data), SprintConfigActivity.getNewSprint(data));
+
+
         }
     }
+    public void editSprint(Sprint oldSprint, Sprint newSprint){
+
+        JSONObject params = new JSONObject();
+
+        try {
+            params.put("startDate", newSprint.getStartDate());
+            params.put("endDate", newSprint.getEndDate());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+                Request.Method.PUT, "http://192.168.8.101:8080/sprints/"+oldSprint.getId(), params,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Response", response.toString());
+                    }
+
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("ResponseError: " + error.getMessage());
+            }
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json; charset=utf-8");
+                return headers;
+            }
+
+        };
+
+        Volley.newRequestQueue(this).add(jsonObjReq);
+
+    }
+
+    public void editTask(Task oldTask, Task newTask){
+
+        JSONObject params = new JSONObject();
+
+        try {
+            params.put("story", newTask.getStory());
+            params.put("weight", newTask.getWeight());
+            params.put("time", newTask.getTime());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+                Request.Method.PUT, "http://192.168.8.101:8080/tasks/"+oldTask.getId(), params,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Response", response.toString());
+                    }
+
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("ResponseError: " + error.getMessage());
+            }
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json; charset=utf-8");
+                return headers;
+            }
+
+        };
+
+        Volley.newRequestQueue(this).add(jsonObjReq);
+    }
+
+    public void addSprint(Sprint sprint){
+        JSONObject params = new JSONObject();
+        try {
+            params.put("projectId",mProjectId);
+            params.put("startDate", String.valueOf(sprint.getStartDate().getTimeInMillis()));
+            params.put("endDate", String.valueOf(sprint.getEndDate().getTimeInMillis()));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+                Request.Method.POST, "http://192.168.8.101:8080/sprints/add", params,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Response", response.toString() + " i am queen");
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("ResponseError: " + error.getMessage());
+            }
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json; charset=utf-8");
+                return headers;
+            }
+
+        };
+
+        Volley.newRequestQueue(this).add(jsonObjReq);
+
+    }
+
 
     // Adapter for the viewpager using FragmentPagerAdapter
     class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -143,25 +270,7 @@ public class SprintMainActivity extends AppCompatActivity {
         }
     }
 
-    private Sprint getActiveSprint() {
-        Cursor data = mDatabaseHelper.getSprints(mProjectId);
-        ArrayList<Sprint> sprints = new ArrayList<Sprint>();
-        long today = System.currentTimeMillis();
-        while (data.moveToNext()) {
-            long startDate = data.getLong(2);
-            long endDate = data.getLong(3);
-            if (today >= startDate && today <= endDate) {
-                int id = data.getInt(0);
-                GregorianCalendar gStartDate = new GregorianCalendar();
-                GregorianCalendar gEndDate = new GregorianCalendar();
 
-                gStartDate.setTimeInMillis(startDate);
-                gEndDate.setTimeInMillis(endDate);
-                return new Sprint(id, gStartDate,gEndDate);
-            }
-        }
-        return null;
-    }
 
     public static Intent newIntent(Context packageContext, Project project){
         Intent intent = new Intent(packageContext, SprintMainActivity.class);

@@ -8,11 +8,15 @@ package com.ciastkaipiwo.android.scrummajster;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.*;
 
 public class Sprint implements Parcelable {
 
     private int mId;
+    private int mProjectId;
     private GregorianCalendar mStartDate;
     private GregorianCalendar mEndDate;
     public ArrayList<Task> mTasksList;
@@ -23,12 +27,28 @@ public class Sprint implements Parcelable {
         this.mTasksList = new ArrayList<Task>();
     }
 
-    Sprint(int id, GregorianCalendar startDate, GregorianCalendar endDate)
+    Sprint(int id,  GregorianCalendar startDate, GregorianCalendar endDate)
     {
         this.mId = id;
         this.mStartDate = startDate;
         this.mEndDate = endDate;
         this.mTasksList = new ArrayList<Task>();
+    }
+
+    Sprint(JSONObject sprint) {
+        try {
+            mId = Integer.valueOf(sprint.getString("sprintId"));
+            mProjectId = Integer.valueOf(sprint.getString("projectId"));
+            GregorianCalendar sDate = new GregorianCalendar();
+            GregorianCalendar eDate = new GregorianCalendar();
+            sDate.setTimeInMillis(Long.valueOf(sprint.getString("startDate")));
+            mStartDate = sDate;
+            eDate.setTimeInMillis(Long.valueOf(sprint.getString("endDate")));
+            mEndDate = eDate;
+            mTasksList = new ArrayList<Task>();
+        } catch(JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public int getId() {return mId;}

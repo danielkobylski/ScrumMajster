@@ -19,10 +19,10 @@ interface DoneListener {
 
 public class DoneAdapter extends RecyclerView.Adapter<DoneAdapter.DoneViewHolder> {
 
-    private List<String> mDoneListAdapter;
+    private List<MiniTasks> mDoneListAdapter;
     private DoneListener mListener;
 
-    public DoneAdapter(List<String> doneListAdapter, DoneListener listener) {
+    public DoneAdapter(List<MiniTasks> doneListAdapter, DoneListener listener) {
         this.mDoneListAdapter = doneListAdapter;
         this.mListener = listener;
     }
@@ -38,7 +38,7 @@ public class DoneAdapter extends RecyclerView.Adapter<DoneAdapter.DoneViewHolder
     @Override
     public void onBindViewHolder(DoneViewHolder holder, int position) {
         holder.mListener = this.mListener;
-        holder.miniTask.setText(mDoneListAdapter.get(position));
+        holder.miniTask.setText(mDoneListAdapter.get(position).getStory());
         holder.position = position;
     }
 

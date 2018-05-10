@@ -1,20 +1,27 @@
 package com.ciastkaipiwo.android.scrummajster;
 
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Toast;
 
-import com.ciastkaipiwo.android.scrummajster.database.ProjectsDBHelper;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 
@@ -23,7 +30,7 @@ public class SprintListFragment extends Fragment {
     private static final String PROJECT_ID = "com.ciastkaipiwo.android.scrummajster.project_id";
 
     private int mProjectId;
-    private ProjectsDBHelper mDatabaseHelper;
+
     private List<Sprint> mSprintsList = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private SprintsAdapter mSprintsAdapter;
@@ -49,7 +56,7 @@ public class SprintListFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_sprint_list, container, false);
-        mDatabaseHelper = new ProjectsDBHelper(this.getContext());
+
 
         Bundle bundle = getArguments();
         if (bundle != null) {
@@ -67,15 +74,41 @@ public class SprintListFragment extends Fragment {
     }
 
     public void initSprintsData() {
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         mSprintsList.clear();
-        Cursor data = mDatabaseHelper.getSprints(mProjectId);
-        while (data.moveToNext()) {
-            int id = data.getInt(0);
-            GregorianCalendar startDate = new GregorianCalendar();
-            GregorianCalendar endDate = new GregorianCalendar();
-            startDate.setTimeInMillis(data.getLong(2));
-            endDate.setTimeInMillis(data.getLong(3));
-            mSprintsList.add(new Sprint(id, startDate, endDate));
-        }
+        // Initialize a new JsonObjectRequest instance
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                "http://192.168.8.101:8080/sprints/project?projectId="+mProjectId,
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try{
+                            Log.d("Response", String.valueOf(response.length()));
+                            for(int i=0;i<response.length();i++){
+                                mSprintsList.add(new Sprint(response.getJSONObject(i)));
+                            }
+                            mSprintsAdapter.notifyDataSetChanged();
+                            mRecyclerView.setAdapter(mSprintsAdapter);
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error){
+                        // Do something when error occurred
+                        Toast.makeText(
+                                getActivity().getApplicationContext(),
+                                "Error while getting projects data",
+                                Toast.LENGTH_LONG
+                        ).show();
+                    }
+                }
+        );
+        requestQueue.add(jsonArrayRequest);
     }
+
 }

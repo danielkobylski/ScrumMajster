@@ -20,10 +20,10 @@ interface DoingListener {
 
 public class DoingAdapter extends RecyclerView.Adapter<DoingAdapter.DoingViewHolder> {
 
-    private List<String> mDoingListAdapter;
+    private List<MiniTasks> mDoingListAdapter;
     private DoingListener mListener;
 
-    public DoingAdapter(List<String> doingListAdapter, DoingListener listener) {
+    public DoingAdapter(List<MiniTasks> doingListAdapter, DoingListener listener) {
         this.mDoingListAdapter = doingListAdapter;
         this.mListener = listener;
     }
@@ -40,7 +40,7 @@ public class DoingAdapter extends RecyclerView.Adapter<DoingAdapter.DoingViewHol
     @Override
     public void onBindViewHolder(DoingViewHolder holder, int position) {
         holder.mListener = this.mListener;
-        holder.miniTask.setText(mDoingListAdapter.get(position));
+        holder.miniTask.setText(mDoingListAdapter.get(position).getStory());
         holder.position = position;
     }
 
