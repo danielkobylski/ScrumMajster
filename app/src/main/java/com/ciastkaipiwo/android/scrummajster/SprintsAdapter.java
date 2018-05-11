@@ -28,6 +28,7 @@ public class SprintsAdapter extends RecyclerView.Adapter<SprintsAdapter.SprintVi
 
     private static final String SPRINT_CHOSEN = "com.ciastkaipiwo.android.scrummajster.sprint_chosen";
     private static final String TASK_TO_MOVE = "com.ciastkaipiwo.android.scrummajster.task_to_move";
+    public String mUrl = "http://s12.mydevil.net:8080/";
     private List<Sprint> mSprintsList;
     private int mProjectId;
     private Task mTaskToMove;
@@ -170,7 +171,7 @@ public class SprintsAdapter extends RecyclerView.Adapter<SprintsAdapter.SprintVi
         }
 
         public void removeSprint(final int position){
-            new AsyncHttpClient().delete("http://192.168.8.101:8080/sprints/"+mSprintsList.get(position).getId(), null, new AsyncHttpResponseHandler() {
+            new AsyncHttpClient().delete(mUrl+"sprints/"+mSprintsList.get(position).getId(), null, new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                     mSprintsList.remove(position);

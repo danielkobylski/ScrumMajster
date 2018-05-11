@@ -20,7 +20,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.ciastkaipiwo.android.scrummajster.database.ProjectsDBHelper;
+//import com.ciastkaipiwo.android.scrummajster.database.ProjectsDBHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +36,7 @@ public class SprintActivity extends AppCompatActivity {
 
     private static final String PROJECT_ID = "com.ciastkaipiwo.android.scrummajster.project_id";
     private static final String SPRINT = "com.ciastkaipiwo.android.scrummajster.sprint";
+    public String mUrl = "http://s12.mydevil.net:8080/";
     private static final int REQUEST_CODE_EDIT_TASK = 3;
 
     private int mProjectId;
@@ -43,7 +44,7 @@ public class SprintActivity extends AppCompatActivity {
     private TextView mSprintStartDate;
     private TextView mSprintEndDate;
     private TextView mSprintFirstText;
-    private ProjectsDBHelper mDatabaseHelper;
+
     private TextView mSprintTaskText;
 
     private List<Task> mTasksList = new ArrayList<>();
@@ -62,7 +63,7 @@ public class SprintActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sprint);
 
-        mDatabaseHelper = new ProjectsDBHelper(this);
+
         mProjectId = getIntent().getIntExtra(PROJECT_ID,-1);
         mSprint = getIntent().getParcelableExtra(SPRINT);
         mSprintStartDate = (TextView) findViewById(R.id.sprint_start_date);
@@ -93,7 +94,7 @@ public class SprintActivity extends AppCompatActivity {
         // Initialize a new JsonObjectRequest instance
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
-                "http://192.168.8.101:8080/tasks/sprint?sprintId="+mSprint.getId(),
+                mUrl+"tasks/sprint?sprintId="+mSprint.getId(),
                 null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -157,7 +158,7 @@ public class SprintActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                Request.Method.PUT, "http://192.168.8.101:8080/tasks/"+oldTask.getId(), params,
+                Request.Method.PUT, mUrl+"tasks/"+oldTask.getId(), params,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

@@ -1,6 +1,7 @@
 package com.ciastkaipiwo.android.scrummajster;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -36,11 +37,16 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_ADD = 0;
     private static final int REQUEST_CODE_EDIT_PROJECT = 2;
+    private static final String TEAM = "com.ciastkaipiwo.android.scrummajster.team";
+    private static final String USER="com.ciastkaipiwo.android.scrummajster.user";
+    public String mUrl = "http://s12.mydevil.net:8080/";
 
     private List<Project> mProjectList = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private ProjectsAdapter mProjectsAdapter;
     private FloatingActionButton mAddButton;
+    private Team mTeam;
+    User mUser;
 
 
     @Override
@@ -52,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         initProjectsData();
+        mProjectsAdapter.notifyDataSetChanged();
         mRecyclerView.setAdapter(mProjectsAdapter);
 }
 
@@ -62,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
+        mTeam = getIntent().getParcelableExtra(TEAM);
+        mUser = getIntent().getParcelableExtra(USER);
 
         mProjectsAdapter = new ProjectsAdapter(mProjectList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -91,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
             if (data == null) {
                 return;
             }
-            addProject(ProjectConfigActivity.getNewProject(data));
+            addProject(ProjectConfigActivity.getNewProject(data), mUser);
         }
         else if (requestCode == REQUEST_CODE_EDIT_PROJECT) {
             if (data == null) {
@@ -107,6 +117,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public static Intent newIntent(Context packageContext, User user){
+        Intent intent = new Intent(packageContext, MainActivity.class);
+        intent.putExtra(USER, user);
+        return intent;
+    }
+
     public void editProject(Project oldProject, Project newProject){
         JSONObject params = new JSONObject();
         try {
@@ -118,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                Request.Method.PUT, "http://192.168.8.101:8080/projects/"+oldProject.getId(), params,
+                Request.Method.PUT, mUrl+"projects/"+oldProject.getId(), params,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -145,22 +161,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void addProject(Project project) {
+    public void addProject(Project project, User user) {
         JSONObject params = new JSONObject();
         try {
             params.put("name", project.getTitle());
             params.put("startDate", String.valueOf(project.getStartDate().getTimeInMillis()));
             params.put("endDate", String.valueOf(project.getEndDate().getTimeInMillis()));
+            params.put("userId", user.getUserId());
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                Request.Method.POST, "http://192.168.8.101:8080/projects/add", params,
+                Request.Method.POST, mUrl+"projects/add", params,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("Response", response.toString() + " i am queen");
+                        Log.d("Response", response.toString());
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -190,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
         // Initialize a new JsonObjectRequest instance
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
-                "http://192.168.8.101:8080/projects/all",
+                mUrl+"projects/user?userId="+ mUser.getUserId(),
                 null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -199,6 +216,7 @@ public class MainActivity extends AppCompatActivity {
                             Log.d("Response", String.valueOf(response.length()));
                             for(int i=0;i<response.length();i++){
                                mProjectList.add(new Project(response.getJSONObject(i)));
+                               mProjectsAdapter.notifyDataSetChanged();
                             }
                             mRecyclerView.setAdapter(mProjectsAdapter);
                         }catch (JSONException e){
@@ -219,6 +237,12 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
         requestQueue.add(jsonArrayRequest);
+    }
+
+    public static Intent newIntent(Context packageContext, Team team){
+        Intent intent = new Intent(packageContext, ProjectActivity.class);
+        intent.putExtra(TEAM, team);
+        return intent;
     }
 }
 

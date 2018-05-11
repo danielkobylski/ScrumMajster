@@ -46,4 +46,13 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="burndown">Burndown</string>
+    <string name="login">Login</string>
+    <string name="signup">Sign Up</string>
+    <string name="password">Password</string>
+    <string name="mail">Mail</string>
+    <string name="last_name">Last Name</string>
+    <string name="register">Register</string>
+    <string name="first_name">First Name</string>
+    <string name="team_title_hint">Type team name here</string>
+    <string name="key_add_hint">Create key</string>
 </resources>

@@ -43,6 +43,8 @@ public class BacklogActivity extends AppCompatActivity {
     private static final String TASK_TO_MOVE = "com.ciastkaipiwo.android.scrummajster.task_to_move";
     private static final String SPRINT_CHOSEN = "com.ciastkaipiwo.android.scrummajster.sprint_chosen";
 
+    public String mUrl = "htt://s12.mydevil.net:8080/";
+
 
     private FloatingActionButton mPlus;
     private ProjectsDBHelper mDatabaseHelper;
@@ -134,17 +136,7 @@ public class BacklogActivity extends AppCompatActivity {
         return intent;
     }
 
-    /**public void initTasksData() {
-        mTasksList.clear();
-        Cursor data = mDatabaseHelper.getBacklogTasks(projectId);
-        while (data.moveToNext()) {
-            int id = data.getInt(0);
-            String story = data.getString(3);
-            int weight = data.getInt(4);
-            int time = data.getInt(5);
-            mTasksList.add(new Task(id,story, weight, time));
-        }
-    }**/
+
 
     public void moveTask(Task task, int sprintId){
         JSONObject params = new JSONObject();
@@ -156,7 +148,7 @@ public class BacklogActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                Request.Method.PUT, "http://192.168.8.101:8080/tasks/sprintId/"+task.getId(), params,
+                Request.Method.PUT, mUrl+"tasks/sprintId/"+task.getId(), params,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -197,7 +189,7 @@ public class BacklogActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                Request.Method.PUT, "http://192.168.8.101:8080/tasks/"+oldTask.getId(), params,
+                Request.Method.PUT, mUrl+"tasks/"+oldTask.getId(), params,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -236,7 +228,7 @@ public class BacklogActivity extends AppCompatActivity {
         }
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                Request.Method.POST, "http://192.168.8.101:8080/tasks/add", params,
+                Request.Method.POST, mUrl+"tasks/add", params,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -269,7 +261,7 @@ public class BacklogActivity extends AppCompatActivity {
         // Initialize a new JsonObjectRequest instance
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
-                "http://192.168.8.101:8080/tasks/project/sprintIsNull?projectId="+projectId,
+                mUrl+"tasks/project/sprintIsNull?projectId="+projectId,
                 null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -278,8 +270,9 @@ public class BacklogActivity extends AppCompatActivity {
                             Log.d("Response", String.valueOf(response.length()));
                             for(int i=0;i<response.length();i++){
                                 mTasksList.add(new Task(response.getJSONObject(i)));
+                                mTasksAdapter.notifyDataSetChanged();
                             }
-                            mTasksAdapter.notifyDataSetChanged();
+
                             mRecyclerView.setAdapter(mTasksAdapter);
                         }catch (JSONException e){
                             e.printStackTrace();

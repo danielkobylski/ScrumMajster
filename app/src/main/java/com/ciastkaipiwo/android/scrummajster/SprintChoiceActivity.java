@@ -28,6 +28,7 @@ public class SprintChoiceActivity extends AppCompatActivity {
 
     private static final String PROJECT_ID = "com.ciastkaipiwo.android.scrummajster.project_id";
     private static final String TASK_TO_MOVE = "com.ciastkaipiwo.android.scrummajster.task_to_move";
+    public String mUrl = "http://s12.mydevil.net:8080/";
 
     private int mProjectId;
     private ProjectsDBHelper mDatabaseHelper;
@@ -71,7 +72,7 @@ public class SprintChoiceActivity extends AppCompatActivity {
         // Initialize a new JsonObjectRequest instance
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
-                "http://192.168.8.101:8080/sprints/project?projectId="+mProjectId,
+                mUrl+"sprints/project?projectId="+mProjectId,
                 null,
                 new Response.Listener<JSONArray>() {
                     @Override

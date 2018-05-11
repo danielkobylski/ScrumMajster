@@ -31,6 +31,7 @@ public class SprintActiveFragment extends Fragment {
 
     private static final String ACTIVE_SPRINT = "com.ciastkaipiwo.android.scrummajster.active_sprint";
     private static final String PROJECT_ID = "com.ciastkaipiwo.android.scrummajster.project_id";
+    public String mUrl = "http://s12.mydevil.net:8080/";
 
     private int mProjectId;
     private Sprint mActiveSprint;
@@ -107,7 +108,7 @@ public class SprintActiveFragment extends Fragment {
         // Initialize a new JsonObjectRequest instance
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
-                "http://192.168.8.101:8080/tasks/sprint?sprintId="+mActiveSprint.getId(),
+                mUrl+"tasks/sprint?sprintId="+mActiveSprint.getId(),
                 null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -148,7 +149,7 @@ public class SprintActiveFragment extends Fragment {
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
-                "http://192.168.8.101:8080/sprints/project?projectId=" + mProjectId,
+                mUrl+"sprints/project?projectId=" + mProjectId,
                 null,
                 new Response.Listener<JSONArray>() {
                     @Override

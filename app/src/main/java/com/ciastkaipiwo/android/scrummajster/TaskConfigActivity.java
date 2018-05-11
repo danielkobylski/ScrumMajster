@@ -13,6 +13,7 @@ public class TaskConfigActivity extends AppCompatActivity{
     private static final String TASK_TO_EDIT = "com.ciastkaipiwo.android.scrummajster.task_to_edit";
     private static final String OLD_TASK = "com.ciastkaipiwo.android.scrummajster.old_task";
 
+
     private Button mOK;
     private EditText mName;
     private EditText mWeight;

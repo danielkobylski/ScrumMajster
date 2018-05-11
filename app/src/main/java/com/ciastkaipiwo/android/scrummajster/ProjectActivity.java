@@ -3,7 +3,6 @@ package com.ciastkaipiwo.android.scrummajster;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -13,6 +12,7 @@ public class ProjectActivity extends AppCompatActivity {
 
 
     private static final String PROJECT = "com.ciastkaipiwo.android.scrummajster.project";
+
     private static final int REQUEST_CODE_ADD_SPRINT = 1;
 
 
@@ -32,7 +32,7 @@ public class ProjectActivity extends AppCompatActivity {
 
         mSprintContainer = (LinearLayout) findViewById(R.id.sprint_container);
 
-        updateUI();
+        //updateUI();
 
 
         mSprintContainer.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +53,7 @@ public class ProjectActivity extends AppCompatActivity {
             }
         });
 
-        updateUI();
+        //updateUI();
 
     }
 
@@ -62,6 +62,8 @@ public class ProjectActivity extends AppCompatActivity {
         intent.putExtra(PROJECT, project);
         return intent;
     }
+
+
 
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -74,22 +76,14 @@ public class ProjectActivity extends AppCompatActivity {
             }
             Sprint sprint = SprintConfigActivity.getNewSprint(data);
             mProject.addSprint(sprint);
-            updateUI();
-        }
-    }
 
-
-    protected void updateUI() {
-        if (mProject.getSprints().size() != 0) {
-            Sprint activeSprint = mProject.getSprints().get(mProject.getSprints().size()-1);
-            int taskCount = activeSprint.mTasksList.size();
-            //mSprintDetails.setText(taskCount + " " + getString(R.string.active_tasks));
-        }
-        else {
-            //mSprintDetails.setText(getString(R.string.no_active_sprint));
         }
     }
 
 
 
-}
+    }
+
+
+
+

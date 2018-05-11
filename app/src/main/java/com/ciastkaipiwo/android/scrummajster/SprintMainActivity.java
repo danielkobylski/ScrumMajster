@@ -39,6 +39,7 @@ public class SprintMainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_EDIT_TASK = 3;
     private static final String PROJECT_ID = "com.ciastkaipiwo.android.scrummajster.project_id";
     private static final String ACTIVE_SPRINT = "com.ciastkaipiwo.android.scrummajster.active_sprint";
+    public String mUrl = "http://s12.mydevil.net:8080/";
 
     private FloatingActionButton mAddSprintButton;
     private ProjectsDBHelper mDatabaseHelper;
@@ -137,7 +138,7 @@ public class SprintMainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                Request.Method.PUT, "http://192.168.8.101:8080/sprints/"+oldSprint.getId(), params,
+                Request.Method.PUT, mUrl+"sprints/"+oldSprint.getId(), params,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -176,7 +177,7 @@ public class SprintMainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                Request.Method.PUT, "http://192.168.8.101:8080/tasks/"+oldTask.getId(), params,
+                Request.Method.PUT, mUrl+"tasks/"+oldTask.getId(), params,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -213,7 +214,7 @@ public class SprintMainActivity extends AppCompatActivity {
         }
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                Request.Method.POST, "http://192.168.8.101:8080/sprints/add", params,
+                Request.Method.POST, mUrl+"sprints/add", params,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -240,7 +241,7 @@ public class SprintMainActivity extends AppCompatActivity {
     }
 
 
-    // Adapter for the viewpager using FragmentPagerAdapter
+
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();

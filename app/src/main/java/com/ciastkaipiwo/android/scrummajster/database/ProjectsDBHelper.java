@@ -14,10 +14,6 @@ import com.ciastkaipiwo.android.scrummajster.database.ProjectDBSchema.SprintsTab
 import com.ciastkaipiwo.android.scrummajster.database.ProjectDBSchema.TasksTable;
 import com.ciastkaipiwo.android.scrummajster.database.ProjectDBSchema.MiniTasksTable;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
 /**
  * Created by Daniel on 18.04.2018.
  */

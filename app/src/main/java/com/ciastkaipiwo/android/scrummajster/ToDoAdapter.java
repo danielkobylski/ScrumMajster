@@ -48,6 +48,11 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
         holder.position = position;
     }
 
+    public void removeItem(int position) {
+        mToDoListAdapter.remove(position);
+        notifyItemRemoved(position);
+    }
+
     @Override
     public int getItemCount() {
         return mToDoListAdapter.size();

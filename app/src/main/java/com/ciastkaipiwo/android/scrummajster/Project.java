@@ -21,14 +21,19 @@ public class Project implements Parcelable {
     private GregorianCalendar mStartDate;
     private GregorianCalendar mEndDate;
     private ArrayList<Sprint> mSprints;
+    private int mUserId;
 
-    Project(int id, String title, GregorianCalendar startDate, GregorianCalendar endDate) {
+    Project(int id, String title, GregorianCalendar startDate, GregorianCalendar endDate, int userId) {
         mId = id;
         mTitle = title;
         mStartDate = startDate;
         mEndDate = endDate;
         mSprints = new ArrayList<Sprint>();
+        mUserId =  userId;
     }
+
+
+    
 
     Project(JSONObject project) {
         try {
@@ -41,10 +46,14 @@ public class Project implements Parcelable {
             eDate.setTimeInMillis(Long.valueOf(project.getString("endDate")));
             mEndDate = eDate;
             mSprints = new ArrayList<Sprint>();
+            mUserId = Integer.valueOf(project.getString("sprintId"));
         } catch(JSONException e) {
             e.printStackTrace();
         }
+
     }
+
+
 
     public int getId() {
         return mId;
@@ -71,6 +80,13 @@ public class Project implements Parcelable {
     public ArrayList<Sprint> getSprints() {return mSprints;}
     public void setSprints(ArrayList<Sprint> sprints) {mSprints = sprints;}
 
+    public int getUserId() {
+        return mUserId;
+    }
+
+    public void setUserId(int userId) {
+        mUserId = userId;}
+
 
     public void addSprint(Sprint sprint) {
         mSprints.add(sprint);
@@ -82,6 +98,7 @@ public class Project implements Parcelable {
         mTitle = in.readString();
         mStartDate = (GregorianCalendar) in.readValue(GregorianCalendar.class.getClassLoader());
         mEndDate = (GregorianCalendar) in.readValue(GregorianCalendar.class.getClassLoader());
+        mUserId = in.readInt();
         if (in.readByte() == 0x01) {
             mSprints = new ArrayList<Sprint>();
             in.readList(mSprints, Sprint.class.getClassLoader());
@@ -101,6 +118,7 @@ public class Project implements Parcelable {
         dest.writeString(mTitle);
         dest.writeValue(mStartDate);
         dest.writeValue(mEndDate);
+        dest.writeValue(mUserId);
         if (mSprints == null) {
             dest.writeByte((byte) (0x00));
         } else {

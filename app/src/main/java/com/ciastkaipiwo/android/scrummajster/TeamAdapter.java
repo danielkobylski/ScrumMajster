@@ -1,9 +1,5 @@
 package com.ciastkaipiwo.android.scrummajster;
 
-/**
- * Created by Daniel on 31.03.2018.
- */
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -18,78 +14,73 @@ import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
-import com.ciastkaipiwo.android.scrummajster.database.ProjectsDBHelper;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
-import java.text.SimpleDateFormat;
+
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ProjectViewHolder>{
+/**
+ * Created by Klaudia on 10.05.2018.
+ */
 
-    private List<Project> projectList;
-    public String mUrl = "http://s12.mydevil.net:8080/";
+public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.TeamViewHolder> {
 
-    public ProjectsAdapter(List<Project> projectList) {
-        this.projectList = projectList;
+    private List<Team> mTeamList;
+
+    public TeamAdapter(List<Team> teamList) {
+        this.mTeamList = teamList;
     }
 
     @Override
-    public ProjectViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public TeamAdapter.TeamViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.projects_list_row, parent, false);
+                .inflate(R.layout.team_list_row, parent, false);
 
-        return new ProjectViewHolder(itemView);
+        return new TeamAdapter.TeamViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(ProjectViewHolder holder, int position) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+    public void onBindViewHolder(TeamAdapter.TeamViewHolder holder, int position) {
 
-        holder.title.setText(projectList.get(position).getTitle());
-        holder.startDate.setText("Start date: " + dateFormat.format(projectList.get(position).getStartDate().getTimeInMillis()));
-        holder.endDate.setText("End date:   " + dateFormat.format(projectList.get(position).getEndDate().getTimeInMillis()));
+        holder.name.setText(mTeamList.get(position).getName());
         holder.position = position;
     }
 
     @Override
     public int getItemCount() {
-        return projectList.size();
+        return mTeamList.size();
     }
 
-    public class ProjectViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private static final int REQUEST_CODE_EDIT_PROJECT = 2;
-        public TextView title;
-        public TextView startDate;
-        public TextView endDate;
+    public class TeamViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        private static final int REQUEST_CODE_EDIT_TEAM = 1;
+        public TextView name;
+
         public int position;
-        public ImageButton mProjectMenu;
-        public ProjectsDBHelper mDatabaseHelper;
+        public ImageButton mTeamMenu;
 
 
-        public ProjectViewHolder(final View view) {
+        public TeamViewHolder(final View view) {
             super(view);
             view.setOnClickListener(this);
 
-            mDatabaseHelper = new ProjectsDBHelper(view.getContext());
 
-            title = (TextView) view.findViewById(R.id.title);
-            startDate = (TextView) view.findViewById(R.id.start_date);
-            endDate = (TextView) view.findViewById(R.id.end_date);
+            name = (TextView) view.findViewById(R.id.name);
 
-            mProjectMenu = (ImageButton) view.findViewById(R.id.project_menu);
 
-            final PopupMenu pum = new PopupMenu(view.getContext(),mProjectMenu);
-            pum.inflate(R.menu.project_popup_menu);
+            mTeamMenu = (ImageButton) view.findViewById(R.id.team_menu);
+
+            final PopupMenu pum = new PopupMenu(view.getContext(),mTeamMenu);
+            pum.inflate(R.menu.team_popup_menu);
 
             pum.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
                     switch (menuItem.getItemId()) {
-                        case R.id.delete_project_button: {
-                            //mDatabaseHelper.removeProject(projectList.get(position));
+                        case R.id.delete_team_button: {
 
                             AlertDialog.Builder builder1 = new AlertDialog.Builder(view.getContext());
                             builder1.setMessage("Are you sure?");
@@ -99,7 +90,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.Projec
                                     "Yes",
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
-                                            deleteProject(position);
+                                            deleteTeam(position);
                                             //Intent tempIntent = new Intent(new Intent(view.getContext(), MainActivity.class));
                                             //tempIntent.putExtra("refresher", 1);
                                             //view.getContext().startActivity(tempIntent);
@@ -118,9 +109,9 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.Projec
                             alert11.show();
                             break;
                         }
-                        case R.id.edit_project_button: {
-                            Intent intent = ProjectConfigActivity.newIntent(view.getContext(),projectList.get(position));
-                            ((Activity) view.getContext()).startActivityForResult(intent, REQUEST_CODE_EDIT_PROJECT);
+                        case R.id.edit_team_button: {
+                            Intent intent = TeamConfigActivity.newIntent(view.getContext(),mTeamList.get(position));
+                            ((Activity) view.getContext()).startActivityForResult(intent, REQUEST_CODE_EDIT_TEAM);
                             break;
                         }
                     }
@@ -128,7 +119,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.Projec
                 }
             });
 
-            mProjectMenu.setOnClickListener(new View.OnClickListener() {
+            mTeamMenu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     pum.show();
@@ -138,16 +129,16 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.Projec
         }
         @Override
         public void onClick(View v) {
-            Intent intent = ProjectActivity.newIntent(v.getContext(),projectList.get(this.position));
+            Intent intent = MainActivity.newIntent(v.getContext(),mTeamList.get(this.position));
             v.getContext().startActivity(intent);
         }
     }
 
-    public void deleteProject(final int position) {
-        new AsyncHttpClient().delete(mUrl+"projects/"+projectList.get(position).getId(), null, new AsyncHttpResponseHandler() {
+    public void deleteTeam(final int position) {
+        new AsyncHttpClient().delete("http://192.168.8.101:8080/team/"+mTeamList.get(position).getTeamID(), null, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                projectList.remove(position);
+                mTeamList.remove(position);
                 notifyDataSetChanged();
                 Log.d("Delete Project result:", "Success");
             }

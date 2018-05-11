@@ -28,6 +28,7 @@ import java.util.List;
 public class SprintListFragment extends Fragment {
 
     private static final String PROJECT_ID = "com.ciastkaipiwo.android.scrummajster.project_id";
+    public String mUrl = "http://s12.mydevil.net:8080/";
 
     private int mProjectId;
 
@@ -79,7 +80,7 @@ public class SprintListFragment extends Fragment {
         // Initialize a new JsonObjectRequest instance
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
-                "http://192.168.8.101:8080/sprints/project?projectId="+mProjectId,
+                mUrl+"sprints/project?projectId="+mProjectId,
                 null,
                 new Response.Listener<JSONArray>() {
                     @Override

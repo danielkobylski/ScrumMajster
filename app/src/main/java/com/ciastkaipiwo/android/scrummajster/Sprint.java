@@ -11,7 +11,8 @@ import android.os.Parcelable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 public class Sprint implements Parcelable {
 

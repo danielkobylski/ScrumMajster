@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item
+    android:id="@+id/edit_team_button"
+    android:title="Edit team"
+    android:visible="true" />
+<item
+android:id="@+id/delete_team_button"
+android:title="Delete team"
+android:visible="true" />
+    </menu>

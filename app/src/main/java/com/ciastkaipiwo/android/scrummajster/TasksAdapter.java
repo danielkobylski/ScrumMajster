@@ -41,6 +41,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
 
     private List<Task> tasksList;
     private int mProjectId;
+    public String mUrl = "http://s12.mydevil.net:8080/";
 
 
     public TasksAdapter(List<Task> tasksList, int projectId) {
@@ -157,7 +158,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
         }
 
         public void removeTask(final int position){
-            new AsyncHttpClient().delete("http://192.168.8.101:8080/tasks/"+tasksList.get(position).getId(), null, new AsyncHttpResponseHandler() {
+            new AsyncHttpClient().delete(mUrl+"tasks/"+tasksList.get(position).getId(), null, new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                     tasksList.remove(position);
@@ -183,7 +184,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
                 e.printStackTrace();
             }
             JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                    Request.Method.PUT, "http://192.168.8.101:8080/tasks/sprintId/"+task.getId(), params,
+                    Request.Method.PUT, mUrl+"tasks/sprintId/"+task.getId(), params,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {

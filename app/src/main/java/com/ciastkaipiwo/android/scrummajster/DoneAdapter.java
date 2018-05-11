@@ -41,6 +41,11 @@ public class DoneAdapter extends RecyclerView.Adapter<DoneAdapter.DoneViewHolder
         holder.miniTask.setText(mDoneListAdapter.get(position).getStory());
         holder.position = position;
     }
+    public void removeItem(int position) {
+        mDoneListAdapter.remove(position);
+
+        notifyItemRemoved(position);
+    }
 
     @Override
     public int getItemCount() {

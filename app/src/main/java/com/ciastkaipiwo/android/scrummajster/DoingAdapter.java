@@ -44,6 +44,12 @@ public class DoingAdapter extends RecyclerView.Adapter<DoingAdapter.DoingViewHol
         holder.position = position;
     }
 
+    public void removeItem(int position) {
+        mDoingListAdapter.remove(position);
+
+        notifyItemRemoved(position);
+    }
+
     @Override
     public int getItemCount() {
         return mDoingListAdapter.size();

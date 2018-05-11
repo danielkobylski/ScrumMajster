@@ -12,18 +12,20 @@
     <LinearLayout
         android:id="@+id/backlog_container"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="222dp"
         android:layout_gravity="center_horizontal|center_vertical"
         android:layout_margin="10dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="50dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/sprint_backlog_color"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/sprint_container"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/sprint_backlog_color">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
@@ -42,15 +44,19 @@
     <LinearLayout
         android:id="@+id/sprint_container"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="214dp"
         android:layout_gravity="center_horizontal|center_vertical"
         android:layout_margin="10dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginStart="2dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="50dp"
         android:background="@color/sprint_backlog_color"
+
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/backlog_container">
 
@@ -68,33 +74,7 @@
     </LinearLayout>
 
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_gravity="center_horizontal|center_vertical"
-        android:layout_margin="10dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginStart="2dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sprint_container"
-        android:background="@color/sprint_backlog_color">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="@string/burndown"
-            android:textColor="@color/white"
-            android:textSize="30dp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
 
 
 

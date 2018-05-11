@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ciastkaipiwo.android.scrummajster">
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,25 +11,52 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" android:label="Projects">
+        <activity
+            android:name=".MainActivity"
+            android:label="Projects" />
+        <activity android:name=".ProjectConfigActivity" />
+        <activity android:name=".TeamActivity" android:label="Your teams" />
+        <activity android:name=".TeamConfigActivity" />
+        <activity android:name=".ProjectActivity" />
+        <activity
+            android:name=".ProfileActivity"
+            android:label="Profile" />
+        <activity
+            android:name=".MenuActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SprintConfigActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SprintActivity"
+            android:label="Sprint Details" />
+        <activity android:name=".KanbanActivity" />
+        <activity
+            android:name=".BacklogActivity"
+            android:label="Backlog" />
+        <activity
+            android:name=".TaskConfigActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SprintMainActivity"
+            android:label="Sprints" />
+        <activity
+            android:name=".SprintChoiceActivity"
+            android:label="Choose Sprint" />
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ProjectConfigActivity" />
-        <activity android:name=".ProjectActivity" />
-        <activity android:name=".SprintConfigActivity" />
-        <activity android:name=".SprintActivity" android:label="Sprint Details" />
-        <activity android:name=".KanbanActivity" />
-        <activity android:name=".BacklogActivity" android:label="Backlog"/>
-        <activity android:name=".TaskConfigActivity" />
         <activity
-            android:name=".SprintMainActivity"
-            android:label="Sprints" />
-        <activity android:name=".TaskActivity" />
-        <activity android:name=".SprintChoiceActivity" android:label="Choose Sprint"></activity>
+            android:name=".RegistrationActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".TeamConfigActivity" />
+        <activity android:name=".TeamAddActivity"></activity>
     </application>
 
 </manifest>

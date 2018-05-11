@@ -72,7 +72,7 @@ public class ProjectConfigActivity extends Activity {
                 GregorianCalendar s = new GregorianCalendar(startYear,startMonth-1,startDay);
                 GregorianCalendar e = new GregorianCalendar(endYear,endMonth-1,endDay);
                 if(e.after(s)){
-                    Project newProject = new Project(0,title, s, e);
+                    Project newProject = new Project(0,title, s, e,0);
                     Intent data = new Intent();
                     data.putExtra(NEW_PROJECT, newProject);
                     data.putExtra(OLD_PROJECT, mProjectToEdit);

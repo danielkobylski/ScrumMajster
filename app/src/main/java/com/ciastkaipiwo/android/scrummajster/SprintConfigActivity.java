@@ -26,6 +26,7 @@ public class SprintConfigActivity extends AppCompatActivity {
     private static final String NEW_SPRINT = "com.ciastkaipiwo.android.scrummajster.new_sprint";
     private static final String SPRINT_TO_EDIT = "com.ciastkaipiwo.android.scrummajster.sprint_to_edit";
     private static final String OLD_SPRINT = "com.ciastkaipiwo.android.scrummajster.old_sprint";
+    public String mUrl = "http://s12.mydevil.net:8080/";
 
     EditText nameEditText;
     TextView startEditText;
