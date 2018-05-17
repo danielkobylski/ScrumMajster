@@ -24,7 +24,6 @@ public class MiniTasks {
     MiniTasks(JSONObject miniTask) {
         try {
             mId = Integer.valueOf(miniTask.getString("miniTaskId"));
-            // mSprintId = Integer.valueOf(task.getString("sprintId"));
             mTaskId = Integer.valueOf(miniTask.getString("taskId"));
             mStory = miniTask.getString("story");
             mKanbanFlag = Integer.valueOf(miniTask.getString("kanbanFlag"));

@@ -43,7 +43,7 @@ public class BacklogActivity extends AppCompatActivity {
     private static final String TASK_TO_MOVE = "com.ciastkaipiwo.android.scrummajster.task_to_move";
     private static final String SPRINT_CHOSEN = "com.ciastkaipiwo.android.scrummajster.sprint_chosen";
 
-    public String mUrl = "htt://s12.mydevil.net:8080/";
+    public String mUrl = "http://s12.mydevil.net:8080/";
 
 
     private FloatingActionButton mPlus;
@@ -219,7 +219,7 @@ public class BacklogActivity extends AppCompatActivity {
         JSONObject params = new JSONObject();
         try {
             params.put("projectId", projectId);
-            //params.put("sprintId",null);
+
             params.put("story", task.getStory());
             params.put("weight", task.getWeight());
             params.put("time", task.getTime());
@@ -258,7 +258,7 @@ public class BacklogActivity extends AppCompatActivity {
     public void initTasksData(){
         RequestQueue requestQueue = Volley.newRequestQueue(BacklogActivity.this);
         mTasksList.clear();
-        // Initialize a new JsonObjectRequest instance
+
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
                 mUrl+"tasks/project/sprintIsNull?projectId="+projectId,

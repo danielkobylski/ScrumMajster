@@ -15,15 +15,7 @@
             android:name=".MainActivity"
             android:label="Projects" />
         <activity android:name=".ProjectConfigActivity" />
-        <activity android:name=".TeamActivity" android:label="Your teams" />
-        <activity android:name=".TeamConfigActivity" />
         <activity android:name=".ProjectActivity" />
-        <activity
-            android:name=".ProfileActivity"
-            android:label="Profile" />
-        <activity
-            android:name=".MenuActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SprintConfigActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -56,7 +48,6 @@
             android:name=".RegistrationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".TeamConfigActivity" />
-        <activity android:name=".TeamAddActivity"></activity>
     </application>
 
 </manifest>

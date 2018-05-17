@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +27,7 @@ public class SprintConfigActivity extends AppCompatActivity {
     private static final String OLD_SPRINT = "com.ciastkaipiwo.android.scrummajster.old_sprint";
     public String mUrl = "http://s12.mydevil.net:8080/";
 
-    EditText nameEditText;
+
     TextView startEditText;
     TextView endEditText;
     DatePickerDialog.OnDateSetListener mDateSetListenerS;
@@ -94,9 +93,6 @@ public class SprintConfigActivity extends AppCompatActivity {
                 endEditText.setText(endDate);
             }
         };
-
-        String startDateSprint = startEditText.getText().toString();
-        String endDateSprint = endEditText.getText().toString();
 
         okButton = (Button) findViewById(R.id.okButton);
 

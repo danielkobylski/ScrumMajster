@@ -114,9 +114,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
                         }
                         case R.id.task_delete_button: {
                             removeTask(position);
-                            //view.getContext().startActivity(tempIntent);
-                            //tasksList.remove(position);
-                            //notifyDataSetChanged();
+
                             break;
                         }
                         case R.id.task_add_to_sprint_button: {
@@ -188,7 +186,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            Log.d("Response", response.toString() + " i am queen");
+                            Log.d("Response", response.toString());
                         }
 
                     }, new Response.ErrorListener() {

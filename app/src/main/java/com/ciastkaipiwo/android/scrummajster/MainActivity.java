@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private ProjectsAdapter mProjectsAdapter;
     private FloatingActionButton mAddButton;
-    private Team mTeam;
+
     User mUser;
 
 
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
-        mTeam = getIntent().getParcelableExtra(TEAM);
+
         mUser = getIntent().getParcelableExtra(USER);
 
         mProjectsAdapter = new ProjectsAdapter(mProjectList);
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("Response", response.toString() + " i am queen");
+                        Log.d("Response", response.toString());
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -204,7 +204,6 @@ public class MainActivity extends AppCompatActivity {
     public void initProjectsData() {
         RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
         mProjectList.clear();
-        // Initialize a new JsonObjectRequest instance
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
                 mUrl+"projects/user?userId="+ mUser.getUserId(),
@@ -239,10 +238,5 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.add(jsonArrayRequest);
     }
 
-    public static Intent newIntent(Context packageContext, Team team){
-        Intent intent = new Intent(packageContext, ProjectActivity.class);
-        intent.putExtra(TEAM, team);
-        return intent;
-    }
 }
 

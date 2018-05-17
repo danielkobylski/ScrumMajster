@@ -14,7 +14,7 @@ import android.widget.TextView;
 import java.util.List;
 
 interface DoingListener {
-    void DownButtonOnClik(View v,int position);
+    void DownButtonOnClick(View v,int position);
     void UpButtonOnClick(View v,int position);
 }
 
@@ -72,7 +72,7 @@ public class DoingAdapter extends RecyclerView.Adapter<DoingAdapter.DoingViewHol
             mDoingDownButton.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    mListener.DownButtonOnClik(v,getAdapterPosition());
+                    mListener.DownButtonOnClick(v,getAdapterPosition());
                 }
             });
             mDoingUpButton = (ImageButton) view.findViewById(R.id.arrow_up_doing);

@@ -29,14 +29,14 @@ import java.util.List;
 
 public class SprintActiveFragment extends Fragment {
 
-    private static final String ACTIVE_SPRINT = "com.ciastkaipiwo.android.scrummajster.active_sprint";
+
     private static final String PROJECT_ID = "com.ciastkaipiwo.android.scrummajster.project_id";
     public String mUrl = "http://s12.mydevil.net:8080/";
 
     private int mProjectId;
     private Sprint mActiveSprint;
-    private TextView mActiveSprintStartDate;
-    private TextView mActiveSprintEndDate, mSprintTaskActiveText;
+
+    private TextView mSprintTaskActiveText;
 
 
     private List<Task> mTasksList = new ArrayList<>();
@@ -46,7 +46,7 @@ public class SprintActiveFragment extends Fragment {
 
 
     public SprintActiveFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
@@ -71,19 +71,15 @@ public class SprintActiveFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_active_sprint, container, false);
 
 
-
-        mActiveSprintStartDate = (TextView) v.findViewById(R.id.active_sprint_start_date);
-        mActiveSprintEndDate = (TextView) v.findViewById(R.id.active_sprint_end_date);
-
         mSprintTaskActiveText = (TextView) v.findViewById(R.id.sprint_task_active);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            //mActiveSprint = bundle.getParcelable(ACTIVE_SPRINT);
+
             mProjectId = bundle.getInt(PROJECT_ID);
             getActiveSprint();
         }
 
-        //if (mActiveSprint != null) {
+
 
             mRecyclerView = (RecyclerView) v.findViewById(R.id.active_sprint_recycler_view);
             mTasksAdapter = new TasksAdapter(mTasksList, mProjectId);
@@ -91,11 +87,11 @@ public class SprintActiveFragment extends Fragment {
             mRecyclerView.setLayoutManager(mLayoutManager);
             mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-            //
+
 
             mSprintTaskActiveText.setText("Tasks:");
 
-       // }
+
 
 
 
@@ -105,7 +101,7 @@ public class SprintActiveFragment extends Fragment {
     public void initTasksData() {
         RequestQueue requestQueue = Volley.newRequestQueue(getContext().getApplicationContext());
         mTasksList.clear();
-        // Initialize a new JsonObjectRequest instance
+
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
                 mUrl+"tasks/sprint?sprintId="+mActiveSprint.getId(),
@@ -131,7 +127,7 @@ public class SprintActiveFragment extends Fragment {
                 new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError error){
-                        // Do something when error occurred
+
                         Toast.makeText(
                                 getContext().getApplicationContext(),
                                 "Error while getting projects data",

@@ -77,7 +77,7 @@ public class SprintActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        //initTasksData();
+
         mRecyclerView.setAdapter(mTasksAdapter);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
         mSprintFirstText.setText("Time:");
@@ -91,7 +91,7 @@ public class SprintActivity extends AppCompatActivity {
     public void initTasksData() {
         RequestQueue requestQueue = Volley.newRequestQueue(SprintActivity.this);
         mTasksList.clear();
-        // Initialize a new JsonObjectRequest instance
+
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
                 mUrl+"tasks/sprint?sprintId="+mSprint.getId(),
@@ -114,7 +114,7 @@ public class SprintActivity extends AppCompatActivity {
                 new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError error){
-                        // Do something when error occurred
+
                         Toast.makeText(
                                 SprintActivity.this,
                                 "Error while getting projects data",

@@ -39,11 +39,9 @@ import cz.msebera.android.httpclient.Header;
 public class KanbanActivity extends AppCompatActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
 
     private static final String SPRINT_TASK = "com.ciastkaipiwo.android.scrummajster.sprinTask";
-    private static final String SPRINT_TASK_POSITION = "com.ciastkaipiwo.android.scrummajster.sprinTaskPosition";
     public String mUrl = "http://s12.mydevil.net:8080/";
 
     private Task mSprintTask;
-    private int mTaskPosition;
     private EditText mEnterTask;
     private Button mOkButton;
     private ToDoAdapter mAdapterToDo;
@@ -52,7 +50,6 @@ public class KanbanActivity extends AppCompatActivity implements RecyclerItemTou
     private RecyclerView mRecyclerView;
     private RecyclerView mRecyclerViewDoing;
     private RecyclerView mRecyclerViewDone;
-    //private ImageButton mToDoArrowButton;
     private List<List<MiniTasks>> mMiniList = new ArrayList<List<MiniTasks>>();
     private List<MiniTasks> mToDoList = new ArrayList<MiniTasks>();
     private List<MiniTasks> mDoingList = new ArrayList<MiniTasks>();
@@ -94,7 +91,6 @@ public class KanbanActivity extends AppCompatActivity implements RecyclerItemTou
                 addMiniTask(mEnterTask.getText().toString());
                 mToDoList.add(new MiniTasks(0, mSprintTask.getId() , mEnterTask.getText().toString(),0));
                 mEnterTask.getText().clear();
-                //mAdapterToDo.notifyDataSetChanged();
                 mRecyclerView.setAdapter(mAdapterToDo);
 
 
@@ -115,13 +111,10 @@ public class KanbanActivity extends AppCompatActivity implements RecyclerItemTou
         });
 
 
-        //final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        //mRecyclerView.setLayoutManager(mLayoutManager);
-        // mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         mAdapterDoing = new DoingAdapter(mDoingList, new DoingListener() {
             @Override
-            public void DownButtonOnClik(View v, int position) {
+            public void DownButtonOnClick(View v, int position) {
                 MiniTasks mini = mDoingList.get(position);
                 mDoingList.remove(position);
                 mDoneList.add(mini);
@@ -305,7 +298,7 @@ public class KanbanActivity extends AppCompatActivity implements RecyclerItemTou
     public void initMiniTask(){
         RequestQueue requestQueue = Volley.newRequestQueue(KanbanActivity.this);
         mMiniList.clear();
-        // Initialize a new JsonObjectRequest instance
+
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
                 mUrl+"miniTasks/task?taskId="+mSprintTask.getId(),

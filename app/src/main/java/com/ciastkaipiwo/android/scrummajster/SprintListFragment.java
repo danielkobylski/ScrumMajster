@@ -37,7 +37,7 @@ public class SprintListFragment extends Fragment {
     private SprintsAdapter mSprintsAdapter;
 
     public SprintListFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
@@ -77,7 +77,7 @@ public class SprintListFragment extends Fragment {
     public void initSprintsData() {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         mSprintsList.clear();
-        // Initialize a new JsonObjectRequest instance
+
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
                 mUrl+"sprints/project?projectId="+mProjectId,
@@ -100,7 +100,7 @@ public class SprintListFragment extends Fragment {
                 new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError error){
-                        // Do something when error occurred
+
                         Toast.makeText(
                                 getActivity().getApplicationContext(),
                                 "Error while getting projects data",

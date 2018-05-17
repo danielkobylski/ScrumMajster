@@ -22,7 +22,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.ciastkaipiwo.android.scrummajster.database.ProjectsDBHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,11 +37,11 @@ public class SprintMainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_EDIT_SPRINT = 2;
     private static final int REQUEST_CODE_EDIT_TASK = 3;
     private static final String PROJECT_ID = "com.ciastkaipiwo.android.scrummajster.project_id";
-    private static final String ACTIVE_SPRINT = "com.ciastkaipiwo.android.scrummajster.active_sprint";
+
     public String mUrl = "http://s12.mydevil.net:8080/";
 
     private FloatingActionButton mAddSprintButton;
-    private ProjectsDBHelper mDatabaseHelper;
+
     private int mProjectId;
 
     @Override
@@ -59,7 +58,7 @@ public class SprintMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sprint_main);
 
-        mDatabaseHelper = new ProjectsDBHelper(this);
+
 
         mProjectId = getIntent().getIntExtra(PROJECT_ID, -1);
         System.out.println("SprintActivity PROJECT ID: " + mProjectId);
@@ -218,7 +217,7 @@ public class SprintMainActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("Response", response.toString() + " i am queen");
+                        Log.d("Response", response.toString() );
                     }
                 }, new Response.ErrorListener() {
             @Override

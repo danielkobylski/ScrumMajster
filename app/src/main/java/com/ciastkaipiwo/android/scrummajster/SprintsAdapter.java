@@ -44,9 +44,7 @@ public class SprintsAdapter extends RecyclerView.Adapter<SprintsAdapter.SprintVi
         this.mTaskToMove = task;
     }
 
-    public Task getTaskToMove() {
-        return mTaskToMove;
-    }
+
 
     @Override
     public SprintViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -115,9 +113,7 @@ public class SprintsAdapter extends RecyclerView.Adapter<SprintsAdapter.SprintVi
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
                                             removeSprint(position);
-                                            //Intent tempIntent = new Intent(new Intent(view.getContext(), SprintMainActivity.class));
-                                            //tempIntent.putExtra("refresher", 1);
-                                            //view.getContext().startActivity(tempIntent);
+
                                         }
                                     });
 
@@ -158,7 +154,7 @@ public class SprintsAdapter extends RecyclerView.Adapter<SprintsAdapter.SprintVi
                 Intent data = new Intent();
                 data.putExtra(SPRINT_CHOSEN, mSprintsList.get(position));
                 data.putExtra(TASK_TO_MOVE, mTaskToMove);
-               // data.putExtra(TASK_TO_MOVE, getIntent().getIntExtra());
+
                 ((Activity) v.getContext()).setResult(RESULT_OK, data);
                 ((Activity) v.getContext()).finish();
             }

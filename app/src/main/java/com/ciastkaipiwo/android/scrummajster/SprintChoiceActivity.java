@@ -16,7 +16,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.ciastkaipiwo.android.scrummajster.database.ProjectsDBHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,7 +30,6 @@ public class SprintChoiceActivity extends AppCompatActivity {
     public String mUrl = "http://s12.mydevil.net:8080/";
 
     private int mProjectId;
-    private ProjectsDBHelper mDatabaseHelper;
     private List<Sprint> mSprintsList = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private SprintsAdapter mSprintsAdapter;
@@ -51,7 +49,7 @@ public class SprintChoiceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sprint_choice);
 
-        mDatabaseHelper = new ProjectsDBHelper(this);
+
 
         mProjectId = getIntent().getIntExtra(PROJECT_ID, -1);
 
@@ -69,7 +67,7 @@ public class SprintChoiceActivity extends AppCompatActivity {
     public void initSprintsData() {
         RequestQueue requestQueue = Volley.newRequestQueue(SprintChoiceActivity.this);
         mSprintsList.clear();
-        // Initialize a new JsonObjectRequest instance
+
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
                 mUrl+"sprints/project?projectId="+mProjectId,
@@ -92,7 +90,7 @@ public class SprintChoiceActivity extends AppCompatActivity {
                 new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError error){
-                        // Do something when error occurred
+
                         Toast.makeText(
                                 SprintChoiceActivity.this,
                                 "Error while getting projects data",

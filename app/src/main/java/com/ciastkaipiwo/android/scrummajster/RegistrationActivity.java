@@ -82,7 +82,7 @@ public class RegistrationActivity extends AppCompatActivity  {
     public void allUser(){
         RequestQueue requestQueue = Volley.newRequestQueue(RegistrationActivity.this);
         mAllUserList.clear();
-        // Initialize a new JsonObjectRequest instance
+
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
                 mUrl+"users/all",
@@ -104,7 +104,7 @@ public class RegistrationActivity extends AppCompatActivity  {
                 new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError error){
-                        // Do something when error occurred
+
                         Toast.makeText(
                                 RegistrationActivity.this,
                                 "Error while getting projects data",

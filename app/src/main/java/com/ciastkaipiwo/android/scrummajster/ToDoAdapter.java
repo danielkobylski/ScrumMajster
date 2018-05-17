@@ -24,7 +24,6 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
 
     private List<MiniTasks> mToDoListAdapter;
     private ToDoListener mListener;
-    private ImageButton Ok;
 
 
     public ToDoAdapter(List<MiniTasks> toDoListAdapter, ToDoListener listener) {

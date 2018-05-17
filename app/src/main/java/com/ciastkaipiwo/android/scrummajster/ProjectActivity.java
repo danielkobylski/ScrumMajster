@@ -17,7 +17,7 @@ public class ProjectActivity extends AppCompatActivity {
 
 
     
-   // private TextView mSprintDetails;
+
     private Project mProject;
     private LinearLayout mBacklogContainer;
     private LinearLayout mSprintContainer;
@@ -32,7 +32,7 @@ public class ProjectActivity extends AppCompatActivity {
 
         mSprintContainer = (LinearLayout) findViewById(R.id.sprint_container);
 
-        //updateUI();
+
 
 
         mSprintContainer.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +53,7 @@ public class ProjectActivity extends AppCompatActivity {
             }
         });
 
-        //updateUI();
+
 
     }
 

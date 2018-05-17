@@ -37,7 +37,7 @@ public class Task implements Parcelable {
     Task(JSONObject task) {
         try {
             mId = Integer.valueOf(task.getString("taskId"));
-            //mSprintId = Integer.valueOf(task.getString("sprintId"));
+
             mProjectId = Integer.valueOf(task.getString("projectId"));
             mStory = task.getString("story");
             mWeight = Integer.valueOf(task.getString("weight"));
